@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<nav th:replace="fragment/fragment::nav">Error</nav>
+
+<section class="bg-dark">
+    <div class="container py-5 vh-100">
+        <div class="row">
+            <div th:each="d : ${sortedDates}" th:object="${d}" class="row align-content-start col-12">
+                <div class="row bg-gradient border-top rounded-top">
+                    <div class="col-2">
+                        <small class="text-white rounded"
+                               th:text="${d}">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Обявено количество|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-3">
+                        <small class="text-light rounded"
+                               th:text="|Резервирано количество|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Оставащо количество|">
+                            iteration by product
+                        </small>
+                    </div>
+                </div>
+                <div th:each="p : ${dayProducts}" th:object="${p}" th:if="${p.getDate() == d}">
+                    <div class="row ">
+                        <div class="col-2">
+                            <small class="text-white"
+                                   th:text="| *{product.getNameInBulgarian()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light rounded"
+                                   th:text="|*{getQuantity()}кг |">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-3">
+                            <small class="text-light rounded"
+                                   th:text="|*{getReservedQuantity()}кг |">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light rounded"
+                                   th:text="|*{getMaxQuantity()}кг |">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-1">
+                            <a th:href="@{/days/{id}/edit(id=${p.getId()})}">Редактирай</a>
+                        </div>
+                        <div class="col-1">
+                            <a th:href="@{/days/{id}/block(id=${p.getId()})}">Блокирай</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

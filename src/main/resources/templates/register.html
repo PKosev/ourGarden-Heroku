@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/fragment::head"><title>Нашата градина</title></head>
+<body class="body-main">
+<header th:replace="fragment/fragment::nav">Error</header>
+<section class="h-100 bg-dark">
+    <div class="container-custom py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card bg-dark card-registration my-4" style="border-radius: 2rem; border-color: #1c1f23; border-width: 3px;">
+                    <div class="row g-0">
+                        <form th:action="@{/users/register}" th:method="POST" th:object="${userBindingRegistrationModel}">
+                            <div class="card-body p-md-5 text-white">
+                                <h3 class="mb-5 text-uppercase text-center">Регистрация</h3>
+
+                                <div class="form-outline text-center mb-4">
+                                    <label class="text-white-50 form-label " for="username">Потребителско име</label>
+                                    <input th:field="*{username}" th:errorclass="is-invalid" type="text" id="username" class="form-control form-control-lg" />
+                                    <small th:if="*{usernameExist == true}" class="bg-danger text-light rounded">
+                                        Username already exist.
+                                    </small>
+                                    <small id="usernameHelpInline"
+                                           class="invalid-feedback bg-danger text-light rounded">
+                                        Потребителското име трябва да бъде между 3 и 15 символа.
+                                    </small>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline text-center">
+                                            <label  class="text-white-50 form-label" for="firstName">Име</label>
+                                            <input th:field="*{firstName}" th:errorclass="is-invalid" type="text" id="firstName" class="form-control form-control-lg" />
+                                            <small class="invalid-feedback bg-danger text-light rounded">
+                                                Името трябва да бъде между 2 и 15 символа.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline text-center">
+                                            <label class="text-white-50 form-label" for="lastName">Фамиля</label>
+                                            <input th:field="*{lastName}" th:errorclass="is-invalid" type="text" id="lastName" class="form-control form-control-lg" />
+                                            <small class="invalid-feedback bg-danger text-light rounded">
+                                                Фамилията трябва да бъде между 2 и 15 символа.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-outline text-center mb-4">
+                                    <label class="text-white-50 form-label" for="address">Адрес</label>
+                                    <input th:field="*{address}" th:errorclass="is-invalid" type="text" id="address" class="form-control form-control-lg" />
+                                    <small class="invalid-feedback bg-danger text-light rounded">
+                                        Адреса трябва да бъде 5 или повече символа.
+                                    </small>
+                                </div>
+
+                                    <div class="mb-4">
+                                        <div class="form-outline text-center">
+                                            <label class="text-white-50 form-label" for="phoneNumber">Телефонен номер</label>
+                                            <input th:field="*{phoneNumber}" th:errorclass="is-invalid" type="text" id="phoneNumber"  placeholder="Пример: 08XXXXXXXX(10 цифри с 08 префикс)" class="form-control form-control-lg" />
+                                            <small class="invalid-feedback bg-danger text-light rounded">
+                                                Въведете правилен телефонен формат, какъвто е показан в примера.
+                                            </small>
+                                            <small th:if="*{phoneNumberExist == true}" class="bg-danger text-light rounded">
+                                                Username already exist.
+                                            </small>
+                                        </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline text-center">
+                                            <label class="text-white-50 form-label" for="password">Парола</label>
+                                            <input th:field="*{password}" th:errorclass="is-invalid" type="password" id="password"
+                                                   aria-describedby="passwordHelpInline" class="form-control form-control-lg" />
+                                            <small id="passwordHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                                                Паролата трябва да бъде 3 или повече символа.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline text-center">
+                                            <label class="text-white-50 form-label" for="confirmPassword">Потвърждение на паролата</label>
+                                            <input th:field="*{confirmPassword}" th:errorclass="is-invalid" type="password" id="confirmPassword"
+                                                   aria-describedby="confirmPasswordHelpInline" class="form-control form-control-lg" />
+                                            <small
+                                                    id="confirmPasswordHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                                                Паролата трябва да бъде 3 или повече символа.
+                                            </small>
+                                            <small th:if="*{getPassword() != getConfirmPassword()}" class="bg-danger text-light rounded">
+                                                Моля въведете правилна парола за потвърждение.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                <button class="btn btn-outline-light btn-lg px-5" type="submit">Регистрирай се</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

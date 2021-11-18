@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<nav th:replace="fragment/fragment::nav">Error</nav>
+
+<section class="h-100 bg-dark">
+    <div class="container-custom py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card bg-dark card-registration my-4" style="border-radius: 2rem; border-color: #1c1f23; border-width: 3px;">
+                    <div class="row g-0">
+                        <form th:action="@{/staff/addStock}" th:method="POST" th:object="${dayAddStockModel}">
+                            <div class="card-body p-md-5 text-white">
+                                <h3 class="mb-5 text-uppercase text-center">Добавяне на наличности</h3>
+                                <div class="form-outline text-center mb-4">
+                                    <label class="text-white-50 form-label" for="product">Вид на продукта</label>
+                                    <select th:field="*{productNameEnum}" th:errorclass="is-invalid" id="product" name="product" class="custom-select">
+                                        <option value="" selected>Изберете вид</option>
+                                        <option th:each="p : ${products}"
+                                                th:value="${p.productNameEnum}" th:text="${p.getNameInBulgarian()}">BATTLE</option>
+                                    </select>
+                                    <small class="invalid-feedback bg-danger text-light rounded">
+                                        Изберете вид от падащото меню.
+                                    </small>
+                                </div>
+                                <div class="form-outline text-center mb-4">
+                                    <label class="text-white-50 form-label " for="date">Дата</label>
+                                    <input th:field="*{date}" th:errorclass="is-invalid" type="date" id="date" class="form-control form-control-lg" />
+                                    <small class="invalid-feedback bg-danger text-light rounded">
+                                         Полето не може да бъде оставено празно или да се посочи дата в миналото.
+                                    </small>
+                                </div>
+
+                                <div class="form-outline text-center mb-4">
+                                    <label class="text-white-50 form-label" for="address">Количество</label>
+                                    <input th:field="*{quantity}" th:errorclass="is-invalid" type="number" id="address" class="form-control form-control-lg" />
+                                    <small class="invalid-feedback bg-danger text-light rounded">
+                                        Количестото трябва да е положително число.
+                                    </small>
+                                </div>
+
+
+                                <div class="text-center">
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Добави</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>
