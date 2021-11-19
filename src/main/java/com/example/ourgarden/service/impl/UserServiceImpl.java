@@ -1,5 +1,6 @@
 package com.example.ourgarden.service.impl;
 
+import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.UserEntity;
 import com.example.ourgarden.model.entity.enums.UserRoleEnum;
 import com.example.ourgarden.model.service.UserEntityServiceModel;
@@ -81,6 +82,13 @@ public class UserServiceImpl implements UserService {
         user.setDateCreated(LocalDate.now());
         user.setPassword(passwordEncoder.encode(userEntityServiceModel.getPassword()));
         userRepository.save(user);
+    }
+
+    @Override
+    public void addOrder(OrderEntity order) {
+       UserEntity user = order.getUser();
+       user.addOrder(order);
+       userRepository.save(user);
     }
 
 }

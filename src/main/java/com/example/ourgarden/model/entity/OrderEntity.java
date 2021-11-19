@@ -3,6 +3,7 @@ package com.example.ourgarden.model.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,11 +11,12 @@ import java.util.List;
 public class OrderEntity extends BaseEntity{
     private LocalDate date;
     private BigDecimal quantity;
-    private ProductEntity product;
+    private DayEntity dayEntity;
     private UserEntity user;
-    private List<CommentsEntity> comments;
+    private List<CommentEntity> comments;
 
     public OrderEntity() {
+        this.comments = new ArrayList<>();
     }
 
     public LocalDate getDate() {
@@ -43,20 +45,24 @@ public class OrderEntity extends BaseEntity{
     }
 
     @ManyToOne
-    public ProductEntity getProduct() {
-        return product;
+    public DayEntity getDayEntity() {
+        return dayEntity;
     }
 
-    public void setProduct(ProductEntity product) {
-        this.product = product;
+    public void setDayEntity(DayEntity dayEntity) {
+        this.dayEntity = dayEntity;
     }
 
-    @OneToMany
-    public List<CommentsEntity> getComments() {
+    @OneToMany(fetch = FetchType.EAGER)
+    public List<CommentEntity> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentsEntity> comments) {
+    public void setComments(List<CommentEntity> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(CommentEntity comment){
+        this.comments.add(comment);
     }
 }

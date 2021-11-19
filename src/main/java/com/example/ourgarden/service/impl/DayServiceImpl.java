@@ -1,6 +1,7 @@
 package com.example.ourgarden.service.impl;
 
 import com.example.ourgarden.model.entity.DayEntity;
+import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.enums.ProductNameEnum;
 import com.example.ourgarden.model.service.DayAddStockServiceModel;
 import com.example.ourgarden.model.view.DayViewModel;
@@ -39,8 +40,13 @@ public class DayServiceImpl implements DayService {
     }
 
     @Override
-    public DayEntity findByDateAnDProduct(LocalDate date, ProductNameEnum productNameEnum) {
+    public DayEntity findByDateAndProduct(LocalDate date, ProductNameEnum productNameEnum) {
         return dayRepository.findByDateAndProduct_ProductNameEnum(date, productNameEnum);
+    }
+
+    @Override
+    public DayEntity findByID(Long id) {
+        return dayRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -48,6 +54,7 @@ public class DayServiceImpl implements DayService {
         dayEntity.setMaxQuantity(dayEntity.getQuantity().subtract(dayEntity.getReservedQuantity()));
         dayEntity.setMinQuantity(dayEntity.getQuantity().multiply(BigDecimal.valueOf(0.05)));
         dayEntity.setActive(dayEntity.getMaxQuantity().compareTo(dayEntity.getMinQuantity()) >= 0);
+        dayRepository.save(dayEntity);
     }
 
     @Override
@@ -57,8 +64,21 @@ public class DayServiceImpl implements DayService {
     }
 
     @Override
+    public void addOrder(OrderEntity order) {
+        DayEntity day = order.getDayEntity();
+        day.addOrder(order);
+        day.setReservedQuantity(day.getReservedQuantity().add(order.getQuantity()));
+        calculateVariables(day);
+    }
+
+    @Override
+    public List<DayViewModel> findByDateAndActive(LocalDate now) {
+        return dayRepository.findByDateAfterAndActive(now,true)
+                .stream().map(day -> modelMapper.map(day,DayViewModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
     public void save(DayEntity dayEntity) {
         calculateVariables(dayEntity);
-        dayRepository.save(dayEntity);
     }
 }

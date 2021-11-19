@@ -11,7 +11,7 @@
             <div class="col">
                 <div class="card bg-dark card-registration my-4" style="border-radius: 2rem; border-color: #1c1f23; border-width: 3px;">
                     <div class="row g-0">
-                        <form th:action="@{/staff/addStock}" th:method="POST" th:object="${dayAddStockModel}">
+                        <form th:action="@{/staff/addStock}" th:method="POST" th:object="${dayAddStockBindingModel}">
                             <div class="card-body p-md-5 text-white">
                                 <h3 class="mb-5 text-uppercase text-center">Добавяне на наличности</h3>
                                 <div class="form-outline text-center mb-4">

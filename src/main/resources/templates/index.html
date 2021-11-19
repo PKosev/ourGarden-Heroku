@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:padding-top="http://www.w3.org/1999/xhtml">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
     <body>
         <!-- Responsive navbar-->
         <nav th:replace="fragment/fragment::nav">Error</nav>
         <!-- Header - set the background image for the header in the line below-->
-        <header class="py-5 bg-image-full" style="height: 45vh; background-image: url('https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+        <header class="py-5 bg-image-full" style="height: 25vh; background-image: url('https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
         </header>
         <!-- Content section-->
         <section sec:authorize="!isAuthenticated()" class="py-5">
@@ -26,15 +26,9 @@
                         <h2 class="text-white">Здравейте, <th:block sec:authentication="name"/> !!! </h2>
                         <div th:each="d : ${sortedDates}" th:object="${d}" class="row align-content-start col-12">
                             <div class="row bg-gradient  rounded-top-custom">
-                                <div class="col-2">
+                                <div class="col-10">
                                     <small class="text-white rounded"
                                            th:text="${d}">
-                                        iteration by product
-                                    </small>
-                                </div>
-                                <div class="col-2">
-                                    <small class="text-light rounded"
-                                           th:text="|Оставащо количество|">
                                         iteration by product
                                     </small>
                                 </div>
@@ -47,7 +41,7 @@
                             </div>
                             <div th:each="p : ${dayProducts}" th:object="${p}" th:if="${p.getDate() == d}">
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-10">
                                         <small class="text-white"
                                                th:text="| *{product.getNameInBulgarian()}|">
                                             iteration by product
@@ -59,21 +53,23 @@
                                             iteration by product
                                         </small>
                                     </div>
+                                    <form  class="row" th:method="POST" th:action="@{/order/{id}/add(id=${p.getId()})}" th:object="${orderBindingModel}" >
                                     <div class="w-auto" >
-                                        <input  type="number" placeholder="Количество">
+                                        <input  type="number" th:field="*{quantity}" min="0.01" step="0.01" placeholder="Количество">
                                     </div>
                                     <div class="w-auto" >
-                                        <input  type="text" placeholder="Кратък коментар">
+                                        <input  type="text" th:field="*{comment}" placeholder="Кратък коментар">
                                     </div>
                                     <div class="col-1">
-                                        <button type="submit">Поръчай</button>
+                                        <button type="submit">Резервирай</button>
                                     </div>
-                                </div>
+                                    </form>
 
+                                </div>
                             </div>
 
                         </div>
-                    <div  class="col-auto rounded-top-custom bg-gradient " >
+                    <div  class="row col-auto rounded-top-custom bg-gradient " >
                         <h2><a href="/" class="text-white">Моите поръчки</a></h2>
                     </div>
                 </div>

@@ -10,13 +10,13 @@ import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class DayAddStockModel {
+public class DayAddStockBindingModel {
 
     private LocalDate date;
     private ProductNameEnum productNameEnum;
     private BigDecimal quantity;
 
-    public DayAddStockModel() {
+    public DayAddStockBindingModel() {
     }
 
     @NotNull

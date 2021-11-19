@@ -1,6 +1,6 @@
 package com.example.ourgarden.web;
 
-import com.example.ourgarden.model.binding.DayAddStockModel;
+import com.example.ourgarden.model.binding.DayAddStockBindingModel;
 import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.ProductEntity;
 import com.example.ourgarden.model.service.DayAddStockServiceModel;
@@ -45,33 +45,39 @@ public class StaffController {
     }
 
     @PostMapping("/addStock")
-    public String addStock(@Valid DayAddStockModel dayAddStockModel,
+    public String addStock(@Valid DayAddStockBindingModel dayAddStockBindingModel,
                       BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("dayAddStockModel", dayAddStockModel);
+            redirectAttributes.addFlashAttribute("dayAddStockModel", dayAddStockBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.dayAddStockModel",bindingResult);
 
             return "redirect:addStock";
         }
-        DayEntity dayEntity = dayService.findByDateAnDProduct(dayAddStockModel.getDate(), dayAddStockModel.getProductNameEnum());
+        DayEntity dayEntity = dayService.findByDateAndProduct(dayAddStockBindingModel.getDate(), dayAddStockBindingModel.getProductNameEnum());
         if (dayEntity != null){
-            dayEntity.setQuantity(dayEntity.getQuantity().add(dayAddStockModel.getQuantity()));
+            dayEntity.setQuantity(dayEntity.getQuantity().add(dayAddStockBindingModel.getQuantity()));
             dayService.save(dayEntity);
         }else {
-            dayService.addStock(modelMapper.map(dayAddStockModel, DayAddStockServiceModel.class));
+            dayService.addStock(modelMapper.map(dayAddStockBindingModel, DayAddStockServiceModel.class));
         }
         return "redirect:/staff/stockView";
     }
     @GetMapping("/stockView")
     public String stockView(Model model){
-        HomeController.daysInformation(model, dayService);
+        List<DayViewModel> dayProducts = dayService.findByDate(LocalDate.now().minusDays(1));
+        Set<LocalDate> dates = new HashSet<>();
+        for (DayViewModel day: dayProducts) {
+            dates.add(day.getDate());
+        }
+        List<LocalDate> sortedDates = dates.stream().sorted().collect(Collectors.toList());
+        model.addAttribute("dayProducts", dayProducts);
+        model.addAttribute("sortedDates", sortedDates);
         return "stockView";
     }
 
 
-
     @ModelAttribute
-    public DayAddStockModel dayAddStockModel(){
-        return new DayAddStockModel();
+    public DayAddStockBindingModel dayAddStockModel(){
+        return new DayAddStockBindingModel();
     }
 }
