@@ -2,12 +2,10 @@ package com.example.ourgarden.web;
 
 import com.example.ourgarden.model.binding.OrderBindingModel;
 import com.example.ourgarden.model.entity.DayEntity;
-import com.example.ourgarden.model.entity.UserEntity;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.service.DayService;
 import com.example.ourgarden.service.OrderService;
 import com.example.ourgarden.service.UserService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
