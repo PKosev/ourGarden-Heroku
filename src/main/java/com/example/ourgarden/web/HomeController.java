@@ -34,38 +34,12 @@ public class HomeController {
         this.orderService = orderService;
         this.userService = userService;
     }
-
     @GetMapping()
-    public String home(Model model){
-        List<DayViewModel> dayProducts = dayService.findByDateAndActive(LocalDate.now().minusDays(1));
-        Set<LocalDate> dates = new HashSet<>();
-        for (DayViewModel day: dayProducts) {
-            dates.add(day.getDate());
+    public String home(Model model,Principal principal){
+        if (principal != null) {
+            String names = userService.getNames(principal.getName());
+            model.addAttribute("names", names);
         }
-        List<LocalDate> sortedDates = dates.stream().sorted().collect(Collectors.toList());
-        model.addAttribute("dayProducts", dayProducts);
-        model.addAttribute("sortedDates", sortedDates);
         return "index";
-    }
-
-    @PostMapping("/order/{id}/add")
-    public String addOffer(@PathVariable Long id, @Valid OrderBindingModel orderBindingModel,
-                           BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal){
-        //todo trow error when not enough quantity
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("offerBindingModel", orderBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel",bindingResult);
-
-            return "redirect:/";
-        }
-        DayEntity dayEntity = dayService.findByID(id);
-        //UserEntity user = userService.findByUsername(principal.getName());
-        orderService.addOffer(principal.getName(),dayEntity,orderBindingModel);
-        return "redirect:/";
-    }
-
-    @ModelAttribute
-    public OrderBindingModel orderBindingModel(){
-        return new OrderBindingModel();
     }
 }

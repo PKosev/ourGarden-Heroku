@@ -24,4 +24,6 @@ public interface DayService {
     void addOrder(OrderEntity order);
 
     List<DayViewModel> findByDateAndActive(LocalDate now);
+
+    void removeOrder(OrderEntity order);
 }

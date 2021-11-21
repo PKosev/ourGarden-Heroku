@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<!-- Header - set the background image for the header in the line below-->
+<header class="py-5 bg-image-full" style="height: 25vh; background-image: url('https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+</header>
+<!-- Content section-->
+<section sec:authorize="!isAuthenticated()" class="py-5">
+    <div class="container my-5">
+        <div  class="row justify-content-center">
+            <div  class="col-lg-10" >
+                <h2>Здравейте, <th:block sec:authentication="name"/></h2>
+                <h4 sec:authorize="!isAuthenticated()" >Моля влезте от <a th:href="@{/users/login}" class="text-dark">  тук</a> за преглед на следващите дни за доставка</h4>
+            </div>
+        </div>
+    </div>
+</section>
+<section sec:authorize="hasRole('USER')" class="py-5 bg-dark">
+    <div class="container my-auto">
+        <div  class="row justify-content-center">
+            <div class="row ">
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/makeOrder}">Налични продукти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Цени</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Сподели рецепта</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Виж всички рецепти</a>
+            </div>
+            <div th:each="d : ${sortedDates}" th:object="${d}" class="row align-content-start col-12">
+                <div class="row bg-gradient  rounded-top-custom">
+                    <div class="col-10">
+                        <small class="text-white rounded"
+                               th:text="${d}">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Оставащо количество|">
+                            iteration by product
+                        </small>
+                    </div>
+                </div>
+                <div th:each="p : ${dayProducts}" th:object="${p}" th:if="${p.getDate() == d}">
+                    <div class="row">
+                        <div class="col-10">
+                            <small class="text-white"
+                                   th:text="| *{product.getNameInBulgarian()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light rounded"
+                                   th:text="|*{getMaxQuantity()}кг |">
+                                iteration by product
+                            </small>
+                        </div>
+                        <form  class="row" th:method="POST" th:action="@{/orders/{id}/add(id=${p.getId()})}" th:object="${orderBindingModel}" >
+                            <div class="w-auto" >
+                                <input  type="number" th:field="*{quantity}" min="0.01" step="0.01" placeholder="Количество">
+                            </div>
+                            <div class="w-auto" >
+                                <input  type="text" th:field="*{comment}" placeholder="Кратък коментар">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit">Резервирай</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Image element - set the background image for the header in the line below-->
+<div class="py-5 bg-image-full" style="background-image: url('https://images.pexels.com/photos/334978/pexels-photo-334978.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')">
+    <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
+    <div style="height: 20rem"></div>
+</div>
+<!-- Footer-->
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

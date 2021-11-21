@@ -7,6 +7,7 @@ import com.example.ourgarden.model.service.UserEntityServiceModel;
 import com.example.ourgarden.repository.UserRepository;
 import com.example.ourgarden.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +90,19 @@ public class UserServiceImpl implements UserService {
        UserEntity user = order.getUser();
        user.addOrder(order);
        userRepository.save(user);
+    }
+
+    @Override
+    public String getNames(String name) {
+        UserEntity user = findByUsername(name);
+        return user.getFirstName() + " " +user.getLastName();
+    }
+
+    @Override
+    public void removeOrder(OrderEntity order) {
+        UserEntity user = order.getUser();
+        user.getOrders().remove(order);
+        userRepository.save(user);
     }
 
 }

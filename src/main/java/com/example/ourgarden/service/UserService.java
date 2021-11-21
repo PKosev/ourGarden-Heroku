@@ -16,4 +16,8 @@ public interface UserService {
 
 
     void addOrder(OrderEntity order);
+
+    String getNames(String name);
+
+    void removeOrder(OrderEntity order);
 }

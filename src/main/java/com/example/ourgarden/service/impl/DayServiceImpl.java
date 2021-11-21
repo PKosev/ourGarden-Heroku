@@ -8,6 +8,7 @@ import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.repository.DayRepository;
 import com.example.ourgarden.service.DayService;
 import com.example.ourgarden.service.ProductService;
+import com.zaxxer.hikari.util.ConcurrentBag;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -51,9 +52,15 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public void calculateVariables(DayEntity dayEntity) {
+        BigDecimal reservedQuantity = (BigDecimal) dayEntity.getOrders().stream()
+                .map(OrderEntity::getQuantity)
+                .collect(Collectors.toList())
+                .stream().reduce(BigDecimal.ZERO,BigDecimal::add);
+        dayEntity.setReservedQuantity(reservedQuantity);
         dayEntity.setMaxQuantity(dayEntity.getQuantity().subtract(dayEntity.getReservedQuantity()));
         dayEntity.setMinQuantity(dayEntity.getQuantity().multiply(BigDecimal.valueOf(0.05)));
         dayEntity.setActive(dayEntity.getMaxQuantity().compareTo(dayEntity.getMinQuantity()) >= 0);
+
         dayRepository.save(dayEntity);
     }
 
@@ -67,7 +74,6 @@ public class DayServiceImpl implements DayService {
     public void addOrder(OrderEntity order) {
         DayEntity day = order.getDayEntity();
         day.addOrder(order);
-        day.setReservedQuantity(day.getReservedQuantity().add(order.getQuantity()));
         calculateVariables(day);
     }
 
@@ -75,6 +81,13 @@ public class DayServiceImpl implements DayService {
     public List<DayViewModel> findByDateAndActive(LocalDate now) {
         return dayRepository.findByDateAfterAndActive(now,true)
                 .stream().map(day -> modelMapper.map(day,DayViewModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void removeOrder(OrderEntity order) {
+        DayEntity day = order.getDayEntity();
+        day.getOrders().remove(order);
+        calculateVariables(day);
     }
 
     @Override

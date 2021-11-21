@@ -25,7 +25,7 @@ public class OurGardenUserServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("Username "+ username + " not found"));
+        UserEntity userEntity = userRepository.findByUsernameAndActive(username,true).orElseThrow(()->new UsernameNotFoundException("Username "+ username + " not found or not active"));
         return mapToUserDetails(userEntity);
     }
 

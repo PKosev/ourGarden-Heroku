@@ -4,6 +4,7 @@ import com.example.ourgarden.model.binding.UserBindingRegistrationModel;
 import com.example.ourgarden.model.service.UserEntityServiceModel;
 import com.example.ourgarden.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,19 @@ public class UserController {
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @PostMapping("/login-error")
+    public String failedLogin(
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+            String userName,
+            RedirectAttributes attributes
+    ) {
+
+        attributes.addFlashAttribute("bad_credentials", true);
+        attributes.addFlashAttribute("username", userName);
+
+        return "redirect:/users/login";
     }
 
     @ModelAttribute

@@ -4,26 +4,28 @@
 <head th:replace="fragment/fragment::head"><title>Нашата градина</title></head>
 <body class="body-main">
 <header th:replace="fragment/fragment::nav">Error</header>
-<section class="vh-85 bg-dark">
-    <div class="container py-5 h-50">
-        <div class="row d-flex justify-content-center align-items-center h-50">
+<section class="bg-dark">
+    <div class="container py-5 h-75">
+        <div class="row d-flex justify-content-center align-items-center h-75 ">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card bg-dark text-white" style="border-radius: 2rem; border-color: #1c1f23; border-width: 3px;">
                     <div class="card-body p-5 text-center">
-
                         <div class="mb-md-5 mt-md-4 pb-5">
                         <form method="post" th:action="@{/users/login}">
                             <h2 class="fw-bold mb-2 text-uppercase">ВХОД</h2>
 
                             <div class="form-outline form-white mb-4">
                                 <label class="form-label" for="username">Потребителско име</label>
-                                <input type="text" name="username" id="username" class="form-control form-control-lg" />
+                                <input type="text" name="username" id="username" th:value="${username}" class="form-control form-control-lg" />
                             </div>
 
                             <div class="form-outline form-white mb-4">
                                 <label class="form-label" for="password">Парола</label>
                                 <input type="password" name="password" id="password" class="form-control form-control-lg" />
                             </div>
+                            <p th:if="${bad_credentials}" class="errors alert alert-danger">
+                                Invalid username or password.
+                            </p>
 
 
                             <button class="btn btn-outline-light btn-lg px-5" type="submit" value="Login">Влез</button>

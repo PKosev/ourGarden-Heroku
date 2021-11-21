@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<!-- Header - set the background image for the header in the line below-->
+<header class="py-5 bg-image-full" style="height: 25vh; background-image: url('https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+</header>
+<section sec:authorize="hasRole('USER')" class="py-5 bg-dark">
+    <div class="container my-auto">
+        <div  class="row justify-content-center">
+            <div class="row ">
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/makeOrder}">Налични продукти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Цени</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Сподели рецепта</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Виж всички рецепти</a>
+            </div>
+            <div class="row align-content-start col-12">
+                <div  class="row bg-gradient  rounded-top-custom">
+                    <div class="col-2 mb-2">
+                        <small class="text-white rounded"
+                               th:text="|Дата на доставяне|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2 mb-2">
+                        <small class="text-white rounded"
+                               th:text="|Продукт|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2 mb-2">
+                        <small class="text-light rounded"
+                               th:text="|Заявено количество|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2 mb-2">
+                        <small class="text-light rounded"
+                               th:text="|Приблизителна цена|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2 mb-2">
+                        <small class="text-light rounded"
+                               th:text="|Дата на поръчка|">
+                            iteration by product
+                        </small>
+                    </div>
+                </div>
+                <div th:object="${order}" class="row bg-gradient  rounded-top-custom">
+                    <div class="col-2">
+                        <small class="text-white rounded"
+                               th:text="|*{getDayEntity().getDate()}|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-white rounded"
+                               th:text="|*{getDayEntity().getProduct().getNameInBulgarian()}|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|*{getQuantity()}|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|*{#numbers.formatDecimal(getQuantity() * getDayEntity().getProduct().getPricePerKilogram(),1,2)} лв.|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|*{getDate()}|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <th:block  th:if="${order.getDayEntity().getDate() != dateNow}">
+                        <form method="POST" th:action="@{/orders/{id}/reset(id=*{getId()})}" class="col-2">
+                            <button type="submit" name="submit" value="value" class=" link-button">Анулирай</button>
+                        </form>
+                    </th:block>
+                </div>
+                <h4 class="text-center text-white">Коментари към поръчката</h4>
+                <div th:each="c : ${order.getComments()}" th:object="${c}" class="row bg-gradient  rounded-top-custom">
+                    <div class="col-3">
+                        <small class="text-white"
+                               th:text="|*{#temporals.format(getDateTime(),'dd-MM-yyyy HH:mm')}/ *{getUser().getFirstName()}  *{getUser().lastName}:|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <th:block th:if="${c.getUser().getUsername() == principal.getName()}">
+                    <div class="bg-gradient col-9">
+                        <small class="text-white"
+                               th:text="|*{getComment()}|">
+                            iteration by product
+                        </small>
+                    </div>
+                    </th:block>
+                    <th:block th:if="${c.getUser().getUsername() != principal.getName()}">
+                     <div class="bg-white col-9 text-end">
+                        <small class="text-dark"
+                               th:text="|*{getComment()}|">
+                            iteration by product
+                        </small>
+                    </div>
+                    </th:block>
+                </div>
+                <div class="text-end">
+                    <form th:method="POST" th:action="@{/orders/{id}/details(id=${order.getId()})}" th:object="${commentBindingModel}" class="col-12">
+
+                        <input th:field="*{comment}" placeholder="Въведете своя коментар" class="col-7" type="text">
+                        <button th:class="col-2" type="submit" name="submit" value="value" class=" link-button">Добави коментар</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Image element - set the background image for the header in the line below-->
+<div class="py-5 bg-image-full" style="background-image: url('https://images.pexels.com/photos/334978/pexels-photo-334978.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')">
+    <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
+    <div style="height: 20rem"></div>
+</div>
+<!-- Footer-->
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>
