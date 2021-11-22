@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<!-- Header - set the background image for the header in the line below-->
+<header class="py-5 bg-image-full" style="height: 25vh; background-image: url('https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+</header>
+<section class="py-5 bg-dark">
+    <div class="container my-auto">
+        <div  class="row justify-content-center">
+            <div class="row ">
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/makeOrder}">Налични продукти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/orders/viewPrices}">Цени</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/shareRecipe}">Сподели рецепта</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes}">Виж всички рецепти</a>
+            </div>
+            <h4 class="ps-5 text-white-50 col-6">Цени за килограм</h4>
+            <div th:each="p : ${products}" th:object="${p}" class="row text-center align-self-center">
+                <div class="col-5">
+                    <small class="text-light rounded"
+                           th:text="|*{nameInBulgarian}|">
+                        iteration by product
+                    </small>
+                </div>
+                <div class="col-3">
+                    <small class="text-light rounded"
+                           th:text="|*{pricePerKilogram} лева|">
+                        iteration by product
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Image element - set the background image for the header in the line below-->
+<div class="py-5 bg-image-full" style="background-image: url('https://images.pexels.com/photos/334978/pexels-photo-334978.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')">
+    <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
+    <div style="height: 20rem"></div>
+</div>
+<!-- Footer-->
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

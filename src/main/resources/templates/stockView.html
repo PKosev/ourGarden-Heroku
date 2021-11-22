@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
 <body>
 <nav th:replace="fragment/fragment::nav">Error</nav>
-
+<section class="py-5 bg-dark">
+    <div class="container my-auto">
+        <div  class="row justify-content-center">
+            <h2 class="text-white text-center">Menu <th:block sec:authentication="name"/>  </h2>
+        </div>
+        <div class="row">
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/addStock}" >Добавяне на наличност</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/stockView}">Преглед на наличности</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editPrices}">Цени</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editUsers}">Потребители</a>
+        </div>
+    </div>
+</section>
 <section class="bg-dark">
     <div class="container py-5 vh-100">
         <div class="row">
@@ -61,11 +76,10 @@
                                 iteration by product
                             </small>
                         </div>
-                        <div class="col-1">
-                            <a th:href="@{/days/{id}/edit(id=${p.getId()})}">Редактирай</a>
-                        </div>
-                        <div class="col-1">
-                            <a th:href="@{/days/{id}/block(id=${p.getId()})}">Блокирай</a>
+                        <div class="col-auto">
+                            <form th:method="POST" th:action="@{/staff/stockView/{id}/block/{id}(id=${p.getId()})}"  >
+                                <button type="submit" name="submit" value="value" class=" link-button">Промени</button>
+                            </form>
                         </div>
                     </div>
 

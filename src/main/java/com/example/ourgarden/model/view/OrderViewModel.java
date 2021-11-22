@@ -6,6 +6,7 @@ import com.example.ourgarden.model.entity.UserEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderViewModel {
@@ -18,6 +19,7 @@ public class OrderViewModel {
 
 
     public OrderViewModel() {
+        this.comments = new ArrayList<>();
     }
 
     public Long getId() {
@@ -67,4 +69,9 @@ public class OrderViewModel {
     public void setComments(List<CommentEntity> comments) {
         this.comments = comments;
     }
+    public void addComment(CommentEntity comment) {
+        this.comments.add(comment);
+    }
+
+
 }

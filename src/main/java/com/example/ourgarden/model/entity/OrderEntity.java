@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -13,10 +15,11 @@ public class OrderEntity extends BaseEntity{
     private BigDecimal quantity;
     private DayEntity dayEntity;
     private UserEntity user;
-    private List<CommentEntity> comments;
+    private Set<CommentEntity> comments;
 
     public OrderEntity() {
-        this.comments = new ArrayList<>();
+        this.comments = new HashSet<>();
+
     }
 
     public LocalDate getDate() {
@@ -53,15 +56,14 @@ public class OrderEntity extends BaseEntity{
         this.dayEntity = dayEntity;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-    public List<CommentEntity> getComments() {
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    public Set<CommentEntity> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentEntity> comments) {
+    public void setComments(Set<CommentEntity> comments) {
         this.comments = comments;
     }
-
     public void addComment(CommentEntity comment){
         this.comments.add(comment);
     }

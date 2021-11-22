@@ -15,9 +15,9 @@
             <div class="row ">
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/makeOrder}">Налични продукти</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
-                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Цени</a>
-                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Сподели рецепта</a>
-                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/}">Виж всички рецепти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/orders/viewPrices}">Цени</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/shareRecipe}">Сподели рецепта</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes}">Виж всички рецепти</a>
             </div>
             <div class="row align-content-start col-12">
                 <div  class="row bg-gradient  rounded-top-custom">
@@ -115,7 +115,7 @@
                     </th:block>
                 </div>
                 <div class="text-end">
-                    <form th:method="POST" th:action="@{/orders/{id}/details(id=${order.getId()})}" th:object="${commentBindingModel}" class="col-12">
+                    <form th:method="POST" th:action="@{/orders/{orderID}/details(orderID=${order.getId()})}" th:object="${commentBindingModel}" class="col-12">
 
                         <input th:field="*{comment}" placeholder="Въведете своя коментар" class="col-7" type="text">
                         <button th:class="col-2" type="submit" name="submit" value="value" class=" link-button">Добави коментар</button>

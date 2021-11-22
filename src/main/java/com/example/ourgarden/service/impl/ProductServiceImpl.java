@@ -2,20 +2,26 @@ package com.example.ourgarden.service.impl;
 
 import com.example.ourgarden.model.entity.ProductEntity;
 import com.example.ourgarden.model.entity.enums.ProductNameEnum;
+import com.example.ourgarden.model.view.ProductViewModel;
 import com.example.ourgarden.repository.ProductRepository;
 import com.example.ourgarden.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper) {
         this.productRepository = productRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -72,5 +78,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<ProductEntity> findByProductNameEnum(ProductNameEnum productNameEnum) {
         return productRepository.findByProductNameEnum(productNameEnum);
+    }
+
+    @Override
+    public List<ProductViewModel> findAll() {
+       return productRepository.findAll().stream().map(product -> modelMapper.map(product, ProductViewModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void editPrice(Long id, BigDecimal price) {
+        ProductEntity product = productRepository.findById(id).orElse(null);
+        assert product != null;
+        product.setPricePerKilogram(price);
+        productRepository.save(product);
     }
 }

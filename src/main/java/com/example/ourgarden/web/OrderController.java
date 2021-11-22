@@ -6,8 +6,10 @@ import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
+import com.example.ourgarden.model.view.ProductViewModel;
 import com.example.ourgarden.service.DayService;
 import com.example.ourgarden.service.OrderService;
+import com.example.ourgarden.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,10 +29,12 @@ import java.util.stream.Collectors;
 public class OrderController {
     private final DayService dayService;
     private final OrderService orderService;
+    private final ProductService productService;
 
-    public OrderController(DayService dayService, OrderService orderService) {
+    public OrderController(DayService dayService, OrderService orderService, ProductService productService) {
         this.dayService = dayService;
         this.orderService = orderService;
+        this.productService = productService;
     }
 
     @GetMapping("/makeOrder")
@@ -84,17 +88,22 @@ public class OrderController {
     }
     @PostMapping("/{id}/details")
     public String orderDetails(@PathVariable Long id, Model model, Principal principal,CommentBindingModel commentBindingModel){
-        OrderEntity order = orderService.findById(id);
+        if (commentBindingModel.getComment() != null  && !commentBindingModel.getComment().isEmpty()){
+            orderService.addComment(id,commentBindingModel.getComment(),principal.getName());
+            commentBindingModel.setComment(null);
+        }
+        OrderViewModel order = orderService.findById(id);
         LocalDate dateNow = LocalDate.now();
         model.addAttribute("principal", principal);
         model.addAttribute("order", order);
         model.addAttribute("dateNow", dateNow);
-        if (commentBindingModel.getComment() != null){
-            orderService.addComment(order,commentBindingModel.getComment(),principal.getName());
-            commentBindingModel.setComment(null);
-        }
-
         return "orderDetails";
+    }
+    @GetMapping("/viewPrices")
+    public String viewPrices(Model model){
+        List<ProductViewModel> products = productService.findAll();
+        model.addAttribute("products",products);
+        return "viewPrices";
     }
 
     @ModelAttribute

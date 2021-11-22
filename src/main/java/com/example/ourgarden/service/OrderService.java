@@ -15,7 +15,7 @@ public interface OrderService {
 
     void removeOrder(Long id);
 
-    OrderEntity findById(Long id);
+    OrderViewModel findById(Long id);
 
-    void addComment(OrderEntity order, String comment, String username);
+    void addComment(Long id, String comment, String username);
 }

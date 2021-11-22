@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,18 +94,29 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity findById(Long id) {
-        return orderRepository.findById(id).orElse(null);
+    public OrderViewModel findById(Long id) {
+        return orderRepository.findById(id).map(order -> {
+            OrderViewModel orderViewModel = new OrderViewModel();
+            orderViewModel.setId(order.getId());
+            orderViewModel.setQuantity(order.getQuantity());
+            orderViewModel.setUser(order.getUser());
+            orderViewModel.setDate(order.getDate());
+            orderViewModel.setDayEntity(order.getDayEntity());
+            order.getComments().stream().sorted(Comparator.comparing(CommentEntity::getDateTime)).forEach(orderViewModel::addComment);
+            return orderViewModel;
+        }).orElse(null);
     }
 
     @Override
-    public void addComment(OrderEntity order, String comment, String username) {
+    public void addComment(Long id, String comment, String username) {
         UserEntity user = userService.findByUsername(username);
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setComment(comment);
         commentEntity.setDateTime(LocalDateTime.now());
         commentEntity.setUser(user);
         commentRepository.save(commentEntity);
+        OrderEntity order = orderRepository.findById(id).orElse(null);
+        assert order != null;
         order.addComment(commentEntity);
         orderRepository.save(order);
     }
