@@ -5,6 +5,7 @@ import com.example.ourgarden.model.entity.CommentEntity;
 import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.UserEntity;
+import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 import com.example.ourgarden.repository.CommentRepository;
 import com.example.ourgarden.repository.DayRepository;
@@ -16,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -40,9 +40,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addOffer(String name, DayEntity dayEntity, OrderBindingModel orderBindingModel) {
+    public void addOffer(DayViewModel day, OrderBindingModel orderBindingModel) {
+        UserEntity user = userService.findByUsername(orderBindingModel.getIdentity());
 
-        UserEntity user = userService.findByUsername(name);
+        internalAddOrder(day, orderBindingModel, user);
+    }
+    @Override
+    public void addOrderByNumber(DayViewModel day, OrderBindingModel orderBindingModel) {
+        UserEntity user = userService.findByPhoneNumber(orderBindingModel.getIdentity());
+
+        internalAddOrder(day, orderBindingModel, user);
+    }
+
+    private void internalAddOrder(DayViewModel day, OrderBindingModel orderBindingModel, UserEntity user) {
+        DayEntity dayEntity = modelMapper.map(day,DayEntity.class);
         OrderEntity order = orderRepository.findByUserAndDayEntity(user,dayEntity);
         if (order == null){
             OrderEntity order1 = new OrderEntity();
@@ -54,7 +65,6 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.save(order1);
             userService.addOrder(order1);
             dayService.addOrder(order1);
-
             return;
         }
         order.setQuantity(order.getQuantity().add(orderBindingModel.getQuantity()));
@@ -62,6 +72,13 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
         userService.addOrder(order);
         dayService.addOrder(order);
+    }
+
+    @Override
+    public List<OrderViewModel> findAllByDateAfter(LocalDate minusDays) {
+        return orderRepository.findAllByDayEntity_DateAfter(minusDays)
+                .stream().map(order -> modelMapper.map(order,OrderViewModel.class))
+                .collect(Collectors.toList());
     }
 
     private void addComment(OrderBindingModel orderBindingModel, UserEntity user, OrderEntity order) {

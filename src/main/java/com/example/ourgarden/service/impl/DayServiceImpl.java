@@ -46,8 +46,8 @@ public class DayServiceImpl implements DayService {
     }
 
     @Override
-    public DayEntity findByID(Long id) {
-        return dayRepository.findById(id).orElse(null);
+    public DayViewModel findByID(Long id) {
+        return dayRepository.findById(id).map(dayEntity -> modelMapper.map(dayEntity,DayViewModel.class)).orElse(null);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class DayServiceImpl implements DayService {
         dayEntity.setReservedQuantity(reservedQuantity);
         dayEntity.setMaxQuantity(dayEntity.getQuantity().subtract(dayEntity.getReservedQuantity()));
         dayEntity.setMinQuantity(dayEntity.getQuantity().multiply(BigDecimal.valueOf(0.05)));
-        dayEntity.setActive(dayEntity.getMaxQuantity().compareTo(dayEntity.getMinQuantity()) >= 0);
+        dayEntity.setActive(dayEntity.getMaxQuantity().compareTo(dayEntity.getMinQuantity()) > 0);
 
         dayRepository.save(dayEntity);
     }
@@ -88,6 +88,14 @@ public class DayServiceImpl implements DayService {
         DayEntity day = order.getDayEntity();
         day.getOrders().remove(order);
         calculateVariables(day);
+    }
+
+    @Override
+    public void blockDayProduct(Long id) {
+        DayEntity dayEntity = dayRepository.findById(id).orElse(null);
+        assert dayEntity != null;
+        dayEntity.setQuantity(dayEntity.getReservedQuantity());
+        save(dayEntity);
     }
 
     @Override

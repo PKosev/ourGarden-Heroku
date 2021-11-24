@@ -13,7 +13,8 @@ public interface DayService {
     void addStock(DayAddStockServiceModel dayAddStockServiceModel);
 
     DayEntity findByDateAndProduct(LocalDate date, ProductNameEnum productNameEnum);
-    DayEntity findByID(Long id);
+    
+    DayViewModel findByID(Long id);
 
     void save(DayEntity dayEntity);
 
@@ -26,4 +27,6 @@ public interface DayService {
     List<DayViewModel> findByDateAndActive(LocalDate now);
 
     void removeOrder(OrderEntity order);
+
+    void blockDayProduct(Long id);
 }

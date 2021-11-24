@@ -5,26 +5,23 @@
 <head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
 <body>
 <nav th:replace="fragment/fragment::nav">Error</nav>
-<section class="py-5 bg-dark">
+<section class="pt-5 bg-dark">
     <div class="container my-auto">
-        <div  class="row justify-content-center">
-            <h2 class="text-white text-center">Menu <th:block sec:authentication="name"/>  </h2>
-        </div>
         <div class="row">
             <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
             <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/addStock}" >Добавяне на наличност</a>
             <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
             <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/stockView}">Преглед на наличности</a>
             <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editPrices}">Цени</a>
-            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editUsers}">Потребители</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/viewUsers}">Потребители</a>
         </div>
     </div>
 </section>
 <section class="bg-dark">
-    <div class="container py-5 vh-100">
+    <div class="container vh-100">
         <div class="row">
             <div th:each="d : ${sortedDates}" th:object="${d}" class="row align-content-start col-12">
-                <div class="row bg-gradient border-top rounded-top">
+                <div class="row bg-gradient  rounded-top">
                     <div class="col-2">
                         <small class="text-white rounded"
                                th:text="${d}">
@@ -77,8 +74,8 @@
                             </small>
                         </div>
                         <div class="col-auto">
-                            <form th:method="POST" th:action="@{/staff/stockView/{id}/block/{id}(id=${p.getId()})}"  >
-                                <button type="submit" name="submit" value="value" class=" link-button">Промени</button>
+                            <form th:method="POST" th:action="@{/staff/stockView/{id}/block(id=${p.getId()})}"  >
+                                <button type="submit" name="submit" value="value" class=" link-button">Блокирай</button>
                             </form>
                         </div>
                     </div>

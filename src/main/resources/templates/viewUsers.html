@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<section class="pt-5 bg-dark">
+    <div class="container ">
+        <div class="row align-items-center">
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/addStock}" >Добавяне на наличност</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/stockView}">Преглед на наличности</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editPrices}">Цени</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/viewUsers}">Потребители</a>
+        </div>
+    </div>
+</section>
+
+<section class=" bg-dark vh-100">
+    <div class="row col-12 justify-content-center">
+        <section id="activeUsers" class="col-5 bg-dark mx-2">
+            <h5 class="text-center text-white">Активни потребители</h5>
+                <div class="row bg-gradient  rounded-top">
+                    <div class="col-auto">
+                        <small class="text-white rounded"
+                               th:text="|ID|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Имена|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-auto">
+                        <small class="text-light rounded"
+                               th:text="|Телефон|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Username|">
+                            iteration by product
+                        </small>
+                    </div>
+                </div>
+                <div th:each="a : ${activeUsers}" th:object="${a}" class="row align-content-start col-12">
+                    <div class="row">
+                        <div class="col-auto">
+                            <small class="text-white "
+                                   th:text="| *{getId()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light "
+                                   th:text="|*{getFirstName()+ ' ' + getLastName()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <small class="text-light "
+                                   th:text="|*{getPhoneNumber()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light "
+                                   th:text="|*{getUsername()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <form method="POST" th:action="@{/admin/{id}/changeStatus(id=${a.getId()})}" class="col-2">
+                                <button type="submit" name="submit" value="value" class=" link-button">Деактивирай</button>
+                            </form>
+                        </div>
+                        <div class="col-1">
+                            <form method="GET" th:action="@{/admin/{id}/editProfile(id=${a.getId()})}" class="col-2">
+                                <button type="submit" name="submit" value="value" class=" link-button">Редакция</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section id="inActiveUsers" class="col-5 bg-dark mx-2">
+                <h5 class="text-center text-white">Неактивни потребители</h5>
+                <div class="row bg-gradient  rounded-top">
+                    <div class="col-auto">
+                        <small class="text-white rounded"
+                               th:text="|ID|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Имена|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-auto">
+                        <small class="text-light rounded"
+                               th:text="|Телефон|">
+                            iteration by product
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        <small class="text-light rounded"
+                               th:text="|Username|">
+                            iteration by product
+                        </small>
+                    </div>
+                </div>
+                <div th:each="i : ${inActiveUsers}" th:object="${i}" class="row align-content-start col-12">
+                    <div class="row">
+                        <div class="col-auto">
+                            <small class="text-white "
+                                   th:text="| *{getId()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light "
+                                   th:text="|*{getFirstName() +' '+ getLastName()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <small class="text-light "
+                                   th:text="|*{getPhoneNumber()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-2">
+                            <small class="text-light "
+                                   th:text="|*{getUsername()}|">
+                                iteration by product
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <form method="POST" th:action="@{/admin/{id}/changeStatus(id=${i.getId()})}" class="col-2">
+                                <button type="submit" name="submit" value="value" class=" link-button">Активирай</button>
+                            </form>
+                        </div>
+                        <div class="col-1">
+                            <form method="GET" th:action="@{/admin/{id}/editProfile(id=${i.getId()})}" class="col-2">
+                                <button type="submit" name="submit" value="value" class=" link-button">Редакция</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </div>
+</section>
+
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

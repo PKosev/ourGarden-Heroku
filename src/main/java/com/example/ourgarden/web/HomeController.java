@@ -35,11 +35,15 @@ public class HomeController {
         this.userService = userService;
     }
     @GetMapping()
-    public String home(Model model,Principal principal){
+    public String homeGet(Model model,Principal principal){
         if (principal != null) {
             String names = userService.getNames(principal.getName());
             model.addAttribute("names", names);
         }
         return "index";
+    }
+    @PostMapping()
+    public String homePost(){
+        return "redirect:/";
     }
 }

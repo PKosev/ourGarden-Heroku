@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class OrderBindingModel {
     private BigDecimal quantity;
     private String comment;
+    private String identity;
 
     public OrderBindingModel() {
 
@@ -30,4 +31,11 @@ public class OrderBindingModel {
         this.comment = comment;
     }
 
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
 }

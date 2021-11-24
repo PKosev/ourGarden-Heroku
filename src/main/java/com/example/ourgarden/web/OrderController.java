@@ -54,15 +54,17 @@ public class OrderController {
     @PostMapping("/{id}/add")
     public String addOffer(@PathVariable Long id, @Valid OrderBindingModel orderBindingModel,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal){
-        //todo trow error when not enough quantity
+        DayViewModel dayEntity = dayService.findByID(id);
+        if (orderBindingModel.getQuantity().compareTo(dayEntity.getMaxQuantity()) > 0){
+            orderBindingModel.setQuantity(dayEntity.getMaxQuantity());
+        }
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("offerBindingModel", orderBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel",bindingResult);
-
             return "redirect:/orders/makeOrder";
         }
-        DayEntity dayEntity = dayService.findByID(id);
-        orderService.addOffer(principal.getName(),dayEntity,orderBindingModel);
+        orderBindingModel.setIdentity(principal.getName());
+        orderService.addOffer(dayEntity,orderBindingModel);
         return "redirect:/orders/makeOrder";
     }
 

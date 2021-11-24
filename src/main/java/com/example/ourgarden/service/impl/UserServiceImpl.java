@@ -1,9 +1,11 @@
 package com.example.ourgarden.service.impl;
 
+import com.example.ourgarden.model.entity.BaseEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.UserEntity;
 import com.example.ourgarden.model.entity.enums.UserRoleEnum;
 import com.example.ourgarden.model.service.UserEntityServiceModel;
+import com.example.ourgarden.model.view.UserViewModel;
 import com.example.ourgarden.repository.UserRepository;
 import com.example.ourgarden.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -12,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -103,6 +108,43 @@ public class UserServiceImpl implements UserService {
         UserEntity user = order.getUser();
         user.getOrders().remove(order);
         userRepository.save(user);
+    }
+
+    @Override
+    public List<UserViewModel> findAllActive() {
+        return userRepository.findAllByActive(true).stream().sorted(Comparator.comparing(BaseEntity::getId)).map(user -> modelMapper.map(user, UserViewModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserViewModel> findAllInActive() {
+        return userRepository.findAllByActive(false).stream().sorted(Comparator.comparing(BaseEntity::getId)).map(user -> modelMapper.map(user, UserViewModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeStatus(Long id) {
+        UserEntity user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setActive(!user.getActive());
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public UserViewModel findUserById(Long id) {
+        return userRepository.findById(id).map(user -> modelMapper.map(user,UserViewModel.class)).orElse(null);
+    }
+
+    @Override
+    public void editRegisteredUser(UserViewModel user, Long id) {
+        UserEntity userEntity = userRepository.findById(id).orElse(null);
+        if (userEntity != null){
+            userEntity.setAddress(user.getAddress());
+            userEntity.setFirstName(user.getFirstName());
+            userEntity.setLastName(user.getLastName());
+            userEntity.setPhoneNumber(user.getPhoneNumber());
+            userEntity.setPassword(user.getPassword());
+            userRepository.save(userEntity);
+        }
     }
 
 }

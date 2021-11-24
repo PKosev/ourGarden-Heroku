@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<section class="pt-5 bg-dark">
+    <div class="container my-auto">
+        <div class="row justify-content-center">
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/addStock}" >Добавяне на наличност</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
+            <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/stockView}">Преглед на наличности</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editPrices}">Цени</a>
+            <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/viewUsers}">Потребители</a>
+        </div>
+    </div>
+</section>
+<section class="bg-dark">
+    <div class="container vh-100">
+        <div class="row" th:object="${user}">
+            <form th:method="POST" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
+            <h4 class="ps-5 text-white-50 text-center" th:text="*{'Профил на ' + getFirstName()+' '+getLastName()}">Имена на потребителя</h4>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                           th:text="|*{getAddress()}|">
+                        iteration by product
+                    </small>
+                    <input th:field="${userBindingRegistrationModel.address}" class="col-auto" th:placeholder="Адрес"  type="text" minlength="5">
+                </div>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                            th:text="|*{getFirstName()}|">
+                        iteration by product
+                    </small>
+                    <input th:field="${userBindingRegistrationModel.firstName}" class="col-auto" th:placeholder="Име" type="text" minlength="2" maxlength="15">
+                </div>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                            th:text="|*{getLastName()}|">
+                        iteration by product
+                    </small>
+                    <input th:field="${userBindingRegistrationModel.lastName}" class="col-auto" th:placeholder="Фамилия" type="text" minlength="2" maxlength="15">
+                </div>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                            th:text="|*{getPhoneNumber()}|">
+                        iteration by product
+                    </small>
+                    <input th:field="${userBindingRegistrationModel.phoneNumber}" class="col-auto" th:placeholder="Телефон" type="text" minlength="10" maxlength="10">
+                    <small th:if="${userBindingRegistrationModel.phoneNumberExist == true}" class="bg-danger text-light rounded col-2">
+                        Телефона вече съществува.
+                    </small>
+                </div>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                            th:text="|Нова парола|">
+                        iteration by product
+                    </small>
+                    <input th:field="${userBindingRegistrationModel.password}" class="col-auto" th:placeholder="Парола" type="password"  minlength="3">
+                </div>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                            th:text="|Потвърди паролата|">
+                        iteration by product
+                    </small>
+                    <input th:field="${userBindingRegistrationModel.confirmPassword}" aria-describedby="passwordHelpInline" class="col-auto" th:placeholder="Проверка+' '+на+ ' '+ парола" type="password" minlength="3">
+                    <small th:if="${userBindingRegistrationModel.getPassword() != userBindingRegistrationModel.getConfirmPassword()}" class="bg-danger text-light rounded col-2">
+                        Моля въведете правилна парола за потвърждение.
+                    </small>
+                </div>
+                <div class="col-4 text-center">
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Редактирай</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

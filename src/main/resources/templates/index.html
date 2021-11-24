@@ -7,15 +7,18 @@
         <!-- Responsive navbar-->
         <nav th:replace="fragment/fragment::nav">Error</nav>
         <!-- Header - set the background image for the header in the line below-->
-        <header class="py-5 bg-image-full" style="height: 25vh; background-image: url('https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
-        </header>
+        <header sec:authorize="!hasRole('ADMIN')" class="py-5 bg-image-full" style="height: 25vh; background-image: url(/image/pexels-photo-1105019.jpeg)"></header>
         <!-- Content section-->
         <section sec:authorize="!isAuthenticated()">
             <div class="container my-5">
                 <div  class="row justify-content-center">
                     <div  class="col-lg-10" >
-                        <h2>Здравейте, <th:block sec:authentication="name"/></h2>
-                        <h4 sec:authorize="!isAuthenticated()" >Моля влезте от <a th:href="@{/users/login}" class="text-dark">  тук</a> за преглед на следващите дни за доставка</h4>
+                        <h2>Здравейте,</h2>
+                        <h4 sec:authorize="!isAuthenticated()" >моля влезте от <a th:href="@{/users/login}" class="text-dark" >  тук</a> за преглед, на следващите дни за доставка.</h4>
+                        <h4 sec:authorize="!isAuthenticated()" class="row"><p class="col-2">Username</p><p class="col-2">Password</p></h4>
+                        <h5 sec:authorize="!isAuthenticated()" class="row"><p class="col-2">admin</p><p class="col-2">admin</p></h5>
+                        <h5 sec:authorize="!isAuthenticated()" class="row"><p class="col-2">staff</p><p class="col-2">staff</p></h5>
+                        <h5 sec:authorize="!isAuthenticated()" class="row"><p class="col-2">user</p><p class="col-2">user</p></h5>
                     </div>
                 </div>
             </div>
@@ -34,23 +37,20 @@
                 </div>
             </div>
         </section>
-        <section sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" class="py-5 bg-dark">
+        <section sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" class="py-5 bg-dark vh-100">
             <div class="container my-auto">
-                <div  class="row justify-content-center">
-                        <h2 class="text-white text-center">Menu <th:block sec:authentication="name"/>  </h2>
-                </div>
                 <div class="row">
                     <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
                     <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/addStock}" >Добавяне на наличност</a>
                     <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
                     <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/stockView}">Преглед на наличности</a>
                     <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editPrices}">Цени</a>
-                    <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editUsers}">Потребители</a>
+                    <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/viewUsers}">Потребители</a>
                 </div>
             </div>
         </section>
         <!-- Image element - set the background image for the header in the line below-->
-        <div class="py-5 bg-image-full" style="background-image: url('https://images.pexels.com/photos/334978/pexels-photo-334978.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')">
+        <div sec:authorize="!hasRole('ADMIN')" class="py-5 bg-image-full" style="background-image: url(/image/pexels-photo-334978.jpeg)">
             <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
             <div style="height: 20rem"></div>
         </div>

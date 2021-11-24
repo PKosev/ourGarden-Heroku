@@ -18,7 +18,7 @@
                                     <label class="text-white-50 form-label " for="username">Потребителско име</label>
                                     <input th:field="*{username}" th:errorclass="is-invalid" type="text" id="username" class="form-control form-control-lg" />
                                     <small th:if="*{usernameExist == true}" class="bg-danger text-light rounded">
-                                        Username already exist.
+                                        Потребителското име вече съществува.
                                     </small>
                                     <small id="usernameHelpInline"
                                            class="invalid-feedback bg-danger text-light rounded">
@@ -63,7 +63,7 @@
                                                 Въведете правилен телефонен формат, какъвто е показан в примера.
                                             </small>
                                             <small th:if="*{phoneNumberExist == true}" class="bg-danger text-light rounded">
-                                                Username already exist.
+                                                Телефона вече съществува.
                                             </small>
                                         </div>
                                     </div>
