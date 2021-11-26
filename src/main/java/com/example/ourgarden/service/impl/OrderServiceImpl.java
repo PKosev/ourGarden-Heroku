@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final UserService userService;
     private final OrderRepository orderRepository;
+    //goodPractice to call service of Comment instead
     private final CommentRepository commentRepository;
     private final DayService dayService;
     private final ModelMapper modelMapper;

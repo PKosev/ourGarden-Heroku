@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<!-- Header - set the background image for the header in the line below-->
+<header class="py-5 bg-image-full" style="height: 25vh; background-image: url(/image/pexels-photo-1105019.jpeg)">
+</header>
+<!-- Content section-->
+<section sec:authorize="!isAuthenticated()" class="py-5">
+  <div class="container my-5">
+    <div  class="row justify-content-center">
+      <div  class="col-lg-10" >
+        <h2>Здравейте, <th:block sec:authentication="name"/></h2>
+        <h4 sec:authorize="!isAuthenticated()" >Моля влезте от <a th:href="@{/users/login}" class="text-dark">  тук</a> за преглед на следващите дни за доставка</h4>
+      </div>
+    </div>
+  </div>
+</section>
+<section sec:authorize="hasRole('USER')" class="py-5 bg-dark">
+  <div class="container my-auto">
+    <div  class="row justify-content-center">
+      <div class="row ">
+        <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/makeOrder}">Налични продукти</a>
+        <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
+        <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/orders/viewPrices}">Цени</a>
+        <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/shareRecipe}">Сподели рецепта</a>
+        <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/all}">Виж всички рецепти</a>
+        <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/mine}">Виж моите рецепти</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-dark">
+  <div class="container vh-100">
+    <div class="row" >
+      <form method="POST" th:action="@{/recipes/shareRecipe}" th:object="${recipeBindingModel}" enctype="multipart/form-data">
+        <h4 class="ps-5 text-white-50 text-center">Добввяне на рецепта</h4>
+        <div class="row align-items-center ">
+          <small  class="text-light rounded col-3">
+            Име на рецептата
+          </small>
+          <input th:field="*{title}" class="col-auto my-3"   type="text"   required="required">
+        </div>
+        <div class="row align-items-center ">
+          <small  class="text-light rounded col-3">
+            Нужни продукти
+          </small>
+            <textarea th:field="*{productsNeeded}" class="col-7 my-3"  type="text" required="required"></textarea>
+
+        </div>
+        <div class="row align-items-center ">
+          <small  class="text-light rounded col-3">
+            Начин на приготвяне
+          </small>
+          <textarea  th:field="*{wayOfPreparation}" class="col-7 my-3" required="required" ></textarea>
+        </div>
+        <div class="row align-items-center ">
+          <small  class="text-light rounded col-3">
+            Снимка
+          </small>
+          <input th:field="*{mainPicture}" class="col-auto text-white my-3" type="file" required="required" >
+        </div>
+        <div class="col-4 text-center">
+          <button class="btn btn-outline-light btn-lg px-5 my-3" type="submit">Сподели</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<!-- Footer-->
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

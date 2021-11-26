@@ -17,7 +17,8 @@
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/orders/viewPrices}">Цени</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/shareRecipe}">Сподели рецепта</a>
-                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes}">Виж всички рецепти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/all}">Виж всички рецепти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/mine}">Виж моите рецепти</a>
             </div>
             <div th:each="s : ${sortedDates}" th:object="${s}" class="row align-content-start col-12">
                 <div class="row bg-gradient  rounded-top-custom">

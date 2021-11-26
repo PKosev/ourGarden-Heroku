@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<!-- Header - set the background image for the header in the line below-->
+<header class="py-5 bg-image-full" style="height: 25vh; background-image: url(/image/pexels-photo-1105019.jpeg)">
+</header>
+<!-- Content section-->
+<section sec:authorize="!isAuthenticated()" class="py-5">
+    <div class="container my-5">
+        <div  class="row justify-content-center">
+            <div  class="col-lg-10" >
+                <h2>Здравейте, <th:block sec:authentication="name"/></h2>
+                <h4 sec:authorize="!isAuthenticated()" >Моля влезте от <a th:href="@{/users/login}" class="text-dark">  тук</a> за преглед на следващите дни за доставка</h4>
+            </div>
+        </div>
+    </div>
+</section>
+<section sec:authorize="hasRole('USER')" class="py-5 bg-dark">
+    <div class="container my-auto">
+        <div  class="row justify-content-center">
+            <div class="row ">
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/makeOrder}">Налични продукти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/orders/viewPrices}">Цени</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/shareRecipe}">Сподели рецепта</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/all}">Виж всички рецепти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/mine}">Виж моите рецепти</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-dark min-vh-100" th:object="${recipe}">
+    <div class="row col-12 justify-content-center">
+        <h3 class="text-white text-center" th:text="*{getTitle()}">Всички рецепти</h3>
+            <div class="row" style="width: 50%">
+                <img  class="mt-2" th:src="*{getMainPicture().getUrl()}" th:alt="*{getMainPicture().getTitle()}" >
+            </div>
+        <div class="row">
+                <div class="mt-2 col-6">
+                    <h3 class="text-white text-center" >Нужни продукти</h3>
+                    <p th:text="*{getProductsNeeded()}" class="text-white mt-auto">Lorem ipsum...</p>
+                </div>
+                <div class="mt-2 col-6">
+                    <h3 class="text-white text-center">Начин на приготвяне</h3>
+                    <p th:text="*{getWayOfPreparation()}" class="text-white mt-auto">Lorem ipsum...</p>
+                </div>
+        </div>
+        <div th:if="${isOwner}" class="row align-items-center">
+            <div class="col-6">
+                <form th:action="@{/recipes/{id}/addPicture(id=${recipe.getId()})}"
+                      th:method="POST"
+                      enctype="multipart/form-data">
+                    <div class="justify-content-center align-items-center col-auto text-white">
+                        <input th:field="${recipeBindingModel.mainPicture}" type="file" name="picture" required>
+                        <button class="btn btn-outline-light btn-lg my-3" type="submit">Добави снимка</button>
+                    </div>
+                </form>
+            </div>
+            <div class="mt-2 justify-content-end col-auto align-content-center justify-content-center align-items-center">
+                <form th:method="DELETE" th:action="@{/recipes/{id}/delete(id=${recipe.getId()})}">
+                    <button class="btn btn-outline-light btn-lg my-3" type="submit">Изтрий</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>

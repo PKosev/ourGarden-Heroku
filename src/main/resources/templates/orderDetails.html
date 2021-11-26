@@ -17,7 +17,8 @@
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/orders/viewOrders}">Преглед на поръчките</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/orders/viewPrices}">Цени</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/shareRecipe}">Сподели рецепта</a>
-                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes}">Виж всички рецепти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/all}">Виж всички рецепти</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/recipes/viewRecipes/mine}">Виж моите рецепти</a>
             </div>
             <div sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" class="row">
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
@@ -105,7 +106,7 @@
                             iteration by product
                         </small>
                     </div>
-                    <th:block th:if="${c.getUser().getUsername() == principal.getName()}">
+                    <th:block th:if="${c.getUser().getUsername() == currentUser}">
                     <div class="bg-gradient col-9">
                         <small class="text-white"
                                th:text="|*{getComment()}|">
@@ -113,7 +114,7 @@
                         </small>
                     </div>
                     </th:block>
-                    <th:block th:if="${c.getUser().getUsername() != principal.getName()}">
+                    <th:block th:if="${c.getUser().getUsername() != currentUser}">
                      <div class="bg-white col-9 text-end">
                         <small class="text-dark"
                                th:text="|*{getComment()}|">

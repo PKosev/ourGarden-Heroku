@@ -20,13 +20,10 @@ import java.util.List;
 public class AdminController {
     private final ProductService productService;
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
-    public AdminController(ProductService productService, UserService userService, PasswordEncoder passwordEncoder) {
+    public AdminController(ProductService productService, UserService userService) {
         this.productService = productService;
         this.userService = userService;
-
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/editPrices")
@@ -75,7 +72,7 @@ public class AdminController {
             if (userService.findByPhoneNumber(userBindingRegistrationModel.getPhoneNumber()) != null){
                 userBindingRegistrationModel.setPhoneNumberExist(true);
             }
-            return "redirect:/admin/{id}/editProfile";
+            return "redirect:/admin/"+id+"/editProfile";
         }
         UserViewModel user = userService.findUserById(id);
         if (!userBindingRegistrationModel.getAddress().isBlank()){
@@ -90,11 +87,11 @@ public class AdminController {
         if (!userBindingRegistrationModel.getPhoneNumber().isBlank()){
             user.setPhoneNumber(userBindingRegistrationModel.getPhoneNumber());
         }
-        if (userBindingRegistrationModel.getPassword().isBlank()){
-            user.setPassword(passwordEncoder.encode(userBindingRegistrationModel.getAddress()));
+        if (!userBindingRegistrationModel.getPassword().isBlank()){
+            user.setPassword(userBindingRegistrationModel.getPassword());
         }
         userService.editRegisteredUser(user,id);
-        return "redirect:/admin/{id}/editProfile";
+        return "redirect:/admin/"+id+"/editProfile";
     }
 
     @ModelAttribute
