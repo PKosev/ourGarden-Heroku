@@ -96,7 +96,7 @@ public class OrderController {
         }
         OrderViewModel order = orderService.findById(id);
         LocalDate dateNow = LocalDate.now();
-        model.addAttribute("principal", principal);
+        model.addAttribute("currentUser", principal.getName());
         model.addAttribute("order", order);
         model.addAttribute("dateNow", dateNow);
         return "orderDetails";
