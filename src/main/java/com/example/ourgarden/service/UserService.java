@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void initAdmin();
+    void initUsers();
 
     UserEntity findByPhoneNumber(String phoneNumber);
 

@@ -105,13 +105,7 @@ public class StaffController {
 
             return "redirect:addStock";
         }
-        DayEntity dayEntity = dayService.findByDateAndProduct(dayAddStockBindingModel.getDate(), dayAddStockBindingModel.getProductNameEnum());
-        if (dayEntity != null){
-            dayEntity.setQuantity(dayEntity.getQuantity().add(dayAddStockBindingModel.getQuantity()));
-            dayService.save(dayEntity);
-        }else {
-            dayService.addStock(modelMapper.map(dayAddStockBindingModel, DayAddStockServiceModel.class));
-        }
+        dayService.addOrCreate(dayAddStockBindingModel);
         return "redirect:/staff/stockView";
     }
     @GetMapping("/stockView")

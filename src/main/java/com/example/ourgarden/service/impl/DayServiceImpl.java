@@ -1,5 +1,6 @@
 package com.example.ourgarden.service.impl;
 
+import com.example.ourgarden.model.binding.DayAddStockBindingModel;
 import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.enums.ProductNameEnum;
@@ -8,7 +9,6 @@ import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.repository.DayRepository;
 import com.example.ourgarden.service.DayService;
 import com.example.ourgarden.service.ProductService;
-import com.zaxxer.hikari.util.ConcurrentBag;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +52,7 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public void calculateVariables(DayEntity dayEntity) {
-        BigDecimal reservedQuantity = (BigDecimal) dayEntity.getOrders().stream()
+        BigDecimal reservedQuantity = dayEntity.getOrders().stream()
                 .map(OrderEntity::getQuantity)
                 .collect(Collectors.toList())
                 .stream().reduce(BigDecimal.ZERO,BigDecimal::add);
@@ -96,6 +96,17 @@ public class DayServiceImpl implements DayService {
         assert dayEntity != null;
         dayEntity.setQuantity(dayEntity.getReservedQuantity());
         save(dayEntity);
+    }
+
+    @Override
+    public void addOrCreate(DayAddStockBindingModel dayAddStockBindingModel) {
+        DayEntity dayEntity = findByDateAndProduct(dayAddStockBindingModel.getDate(), dayAddStockBindingModel.getProductNameEnum());
+        if (dayEntity != null){
+            dayEntity.setQuantity(dayEntity.getQuantity().add(dayAddStockBindingModel.getQuantity()));
+            save(dayEntity);
+        }else {
+            addStock(modelMapper.map(dayAddStockBindingModel, DayAddStockServiceModel.class));
+        }
     }
 
     @Override

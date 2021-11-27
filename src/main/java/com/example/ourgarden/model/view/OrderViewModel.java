@@ -15,7 +15,7 @@ public class OrderViewModel {
     private BigDecimal quantity;
     private DayEntity dayEntity;
     private UserEntity user;
-    private List<CommentEntity> comments;
+    private List<CommentViewModel> comments;
 
 
     public OrderViewModel() {
@@ -62,14 +62,14 @@ public class OrderViewModel {
         this.user = user;
     }
 
-    public List<CommentEntity> getComments() {
+    public List<CommentViewModel> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentEntity> comments) {
+    public void setComments(List<CommentViewModel> comments) {
         this.comments = comments;
     }
-    public void addComment(CommentEntity comment) {
+    public void addComment(CommentViewModel comment) {
         this.comments.add(comment);
     }
 

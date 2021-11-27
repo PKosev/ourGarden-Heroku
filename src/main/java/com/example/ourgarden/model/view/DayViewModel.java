@@ -16,7 +16,7 @@ public class DayViewModel {
     private BigDecimal minQuantity;
     private BigDecimal maxQuantity;
     private Boolean isActive;
-    private Set<OrderEntity> orders;
+    private Set<OrderViewModel> orders;
 
     public DayViewModel() {
     }
@@ -85,11 +85,11 @@ public class DayViewModel {
         isActive = active;
     }
 
-    public Set<OrderEntity> getOrders() {
+    public Set<OrderViewModel> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<OrderEntity> orders) {
+    public void setOrders(Set<OrderViewModel> orders) {
         this.orders = orders;
     }
 }

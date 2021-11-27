@@ -1,5 +1,6 @@
 package com.example.ourgarden.service;
 
+import com.example.ourgarden.model.binding.DayAddStockBindingModel;
 import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.enums.ProductNameEnum;
@@ -29,4 +30,6 @@ public interface DayService {
     void removeOrder(OrderEntity order);
 
     void blockDayProduct(Long id);
+
+    void addOrCreate(DayAddStockBindingModel dayAddStockBindingModel);
 }

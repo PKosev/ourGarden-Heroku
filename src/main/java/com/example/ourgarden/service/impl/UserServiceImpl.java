@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void initAdmin() {
+    public void initUsers() {
         if(userRepository.count() !=0){
             return;
         }

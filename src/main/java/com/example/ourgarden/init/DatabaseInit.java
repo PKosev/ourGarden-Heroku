@@ -16,8 +16,8 @@ public class DatabaseInit implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         productService.initProducts();
-        userService.initAdmin();
+        userService.initUsers();
     }
 }

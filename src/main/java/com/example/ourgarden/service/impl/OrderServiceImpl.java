@@ -5,6 +5,7 @@ import com.example.ourgarden.model.entity.CommentEntity;
 import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.UserEntity;
+import com.example.ourgarden.model.view.CommentViewModel;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 import com.example.ourgarden.repository.CommentRepository;
@@ -120,7 +121,15 @@ public class OrderServiceImpl implements OrderService {
             orderViewModel.setUser(order.getUser());
             orderViewModel.setDate(order.getDate());
             orderViewModel.setDayEntity(order.getDayEntity());
-            order.getComments().stream().sorted(Comparator.comparing(CommentEntity::getDateTime)).forEach(orderViewModel::addComment);
+            order.getComments().stream().sorted(Comparator.comparing(CommentEntity::getDateTime)).forEach(comment -> {
+                CommentViewModel commentViewModel = new CommentViewModel();
+                commentViewModel.setComment(comment.getComment());
+                commentViewModel.setDateTime(comment.getDateTime());
+                commentViewModel.setUsername(comment.getUser().getUsername());
+                commentViewModel.setFirstName(comment.getUser().getFirstName());
+                commentViewModel.setLastName(comment.getUser().getLastName());
+                orderViewModel.addComment(commentViewModel);
+            });
             return orderViewModel;
         }).orElse(null);
     }

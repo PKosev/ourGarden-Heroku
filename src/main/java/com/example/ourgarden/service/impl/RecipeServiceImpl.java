@@ -4,27 +4,33 @@ import com.example.ourgarden.model.binding.RecipeBindingModel;
 import com.example.ourgarden.model.entity.PictureEntity;
 import com.example.ourgarden.model.entity.RecipeEntity;
 import com.example.ourgarden.model.entity.UserEntity;
+import com.example.ourgarden.model.view.OrderViewModel;
+import com.example.ourgarden.model.view.RecipeViewModel;
 import com.example.ourgarden.repository.RecipeRepository;
 import com.example.ourgarden.service.PictureService;
 import com.example.ourgarden.service.RecipeService;
 import com.example.ourgarden.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final UserService userService;
     private final RecipeRepository recipeRepository;
     private final PictureService pictureService;
+    private final ModelMapper modelMapper;
 
-    public RecipeServiceImpl(UserService userService, RecipeRepository recipeRepository, PictureService pictureService) {
+    public RecipeServiceImpl(UserService userService, RecipeRepository recipeRepository, PictureService pictureService, ModelMapper modelMapper) {
         this.userService = userService;
         this.recipeRepository = recipeRepository;
         this.pictureService = pictureService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -50,18 +56,21 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeEntity> findMyRecipes(Principal principal) {
-        return recipeRepository.findAllByAuthor_Username(principal.getName());
+    public List<RecipeViewModel> findMyRecipes(Principal principal) {
+        return recipeRepository.findAllByAuthor_Username(principal.getName()).stream().map(recipeEntity -> modelMapper.map(recipeEntity,RecipeViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<RecipeEntity> findAll() {
-        return recipeRepository.findAll();
+    public List<RecipeViewModel> findAll() {
+        return recipeRepository.findAll().stream().map(recipeEntity -> modelMapper.map(recipeEntity,RecipeViewModel.class))
+                .collect(Collectors.toList());
+
     }
 
     @Override
-    public RecipeEntity findRecipeById(Long id) {
-        return recipeRepository.findById(id).orElse(null);
+    public RecipeViewModel findRecipeById(Long id) {
+        return recipeRepository.findById(id).map(recipeEntity -> modelMapper.map(recipeEntity,RecipeViewModel.class)).orElse(null);
     }
 
     @Override

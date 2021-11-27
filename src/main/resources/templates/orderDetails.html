@@ -102,11 +102,11 @@
                 <div th:each="c : ${order.getComments()}" th:object="${c}" class="row bg-gradient  rounded-top-custom">
                     <div class="col-3">
                         <small class="text-white"
-                               th:text="|*{#temporals.format(getDateTime(),'dd-MM-yyyy HH:mm')}/ *{getUser().getFirstName()}  *{getUser().lastName}:|">
+                               th:text="|*{#temporals.format(getDateTime(),'dd-MM-yyyy HH:mm')}/ *{getFirstName()}  *{getLastName()}:|">
                             iteration by product
                         </small>
                     </div>
-                    <th:block th:if="${c.getUser().getUsername() == currentUser}">
+                    <th:block th:if="${c.getUsername() == currentUser}">
                     <div class="bg-gradient col-9">
                         <small class="text-white"
                                th:text="|*{getComment()}|">
@@ -114,7 +114,7 @@
                         </small>
                     </div>
                     </th:block>
-                    <th:block th:if="${c.getUser().getUsername() != currentUser}">
+                    <th:block th:if="${c.getUsername() != currentUser}">
                      <div class="bg-white col-9 text-end">
                         <small class="text-dark"
                                th:text="|*{getComment()}|">
