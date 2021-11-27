@@ -9,17 +9,6 @@
 <!-- Header - set the background image for the header in the line below-->
 <header class="py-5 bg-image-full" style="height: 25vh; background-image: url(/image/pexels-photo-1105019.jpeg)">
 </header>
-<!-- Content section-->
-<section sec:authorize="!isAuthenticated()" class="py-5">
-    <div class="container my-5">
-        <div  class="row justify-content-center">
-            <div  class="col-lg-10" >
-                <h2>Здравейте, <th:block sec:authentication="name"/></h2>
-                <h4 sec:authorize="!isAuthenticated()" >Моля влезте от <a th:href="@{/users/login}" class="text-dark">  тук</a> за преглед на следващите дни за доставка</h4>
-            </div>
-        </div>
-    </div>
-</section>
 <section sec:authorize="hasRole('USER')" class="py-5 bg-dark">
     <div class="container my-auto">
         <div  class="row justify-content-center">
@@ -36,7 +25,8 @@
 </section>
 <section class="bg-dark min-vh-100">
     <div class="row col-12 justify-content-center">
-        <h3 class="text-white text-center">Всички рецепти</h3>
+        <h3 class="text-white text-center" th:if="${mine}">Моите рецепти</h3>
+        <h3 class="text-white text-center" th:unless="${mine}">Всички рецепти</h3>
         <div class="col-md-5  border border-3 rounded my-4 mx-5" style="width: 20rem" th:each="r : ${recipes}" th:object="${r}">
             <div class="row ">
                 <img  class="mt-2" th:src="*{getMainPicture().getUrl()}" th:alt="*{getMainPicture().getTitle()}" >

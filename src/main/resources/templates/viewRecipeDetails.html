@@ -36,7 +36,7 @@
 </section>
 <section class="bg-dark min-vh-100" th:object="${recipe}">
     <div class="row col-12 justify-content-center">
-        <h3 class="text-white text-center" th:text="*{getTitle()}">Всички рецепти</h3>
+        <h3 class="text-white text-center" th:text="*{getTitle()}">Име на рецептата</h3>
             <div class="row" style="width: 50%">
                 <img  class="mt-2" th:src="*{getMainPicture().getUrl()}" th:alt="*{getMainPicture().getTitle()}" >
             </div>
@@ -49,6 +49,11 @@
                     <h3 class="text-white text-center">Начин на приготвяне</h3>
                     <p th:text="*{getWayOfPreparation()}" class="text-white mt-auto">Lorem ipsum...</p>
                 </div>
+        </div>
+        <div class="row">
+            <div th:each="p: ${recipe.getPictures()}" th:object="${p}"  class="row col-3"  style="width: 34%; height: 24%">
+                <img  class="mt-2" th:src="*{getUrl()}" th:alt="*{getTitle()}" >
+            </div>
         </div>
         <div th:if="${isOwner}" class="row align-items-center">
             <div class="col-6">

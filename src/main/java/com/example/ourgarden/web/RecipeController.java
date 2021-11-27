@@ -1,7 +1,6 @@
 package com.example.ourgarden.web;
 
 import com.example.ourgarden.model.binding.RecipeBindingModel;
-import com.example.ourgarden.model.entity.RecipeEntity;
 import com.example.ourgarden.model.view.RecipeViewModel;
 import com.example.ourgarden.service.RecipeService;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-//todo Create RecipeViewModel and GalleryView in RecipeDetails
 @Controller
 @RequestMapping("/recipes")
 public class RecipeController {
@@ -38,12 +36,14 @@ public class RecipeController {
     public String allRecipes(Model model){
         List<RecipeViewModel> recipes = recipeService.findAll();
         model.addAttribute("recipes",recipes);
+        model.addAttribute("mine",false);
         return "viewRecipes";
     }
     @GetMapping("/viewRecipes/mine")
     public String mineRecipes(Model model, Principal principal){
         List<RecipeViewModel> recipes = recipeService.findMyRecipes(principal);
         model.addAttribute("recipes",recipes);
+        model.addAttribute("mine",true);
         return "viewRecipes";
     }
     @GetMapping("/{id}/viewRecipeDetails")
