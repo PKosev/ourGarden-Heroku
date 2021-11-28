@@ -62,7 +62,7 @@
                         </div>
                         <form  class="row" th:method="POST" th:action="@{/orders/{id}/add(id=${p.getId()})}" th:object="${orderBindingModel}" >
                             <div class="w-auto" >
-                                <input  type="number" th:field="*{quantity}" min="0.01" step="0.01" placeholder="Количество">
+                                <input  type="number" th:field="*{quantity}" min="0.01" step="0.01" placeholder="Количество" required>
                             </div>
                             <div class="w-auto" >
                                 <input  type="text" th:field="*{comment}" placeholder="Кратък коментар">

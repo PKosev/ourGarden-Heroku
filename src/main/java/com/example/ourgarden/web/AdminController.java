@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin")
@@ -87,9 +88,10 @@ public class AdminController {
         if (!userBindingRegistrationModel.getPhoneNumber().isBlank()){
             user.setPhoneNumber(userBindingRegistrationModel.getPhoneNumber());
         }
-        if (!userBindingRegistrationModel.getPassword().isBlank()){
+        if (!userBindingRegistrationModel.getPassword().isBlank() && userBindingRegistrationModel.getPassword() != null){
             user.setPassword(userBindingRegistrationModel.getPassword());
         }
+        user.setUserRoleEnum(userBindingRegistrationModel.getUserRoleEnum());
         userService.editRegisteredUser(user,id);
         return "redirect:/admin/"+id+"/editProfile";
     }

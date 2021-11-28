@@ -5,10 +5,10 @@
 <body class="body-main">
 <header th:replace="fragment/fragment::nav">Error</header>
 <section class="bg-dark">
-    <div class="container py-5 h-75">
-        <div class="row d-flex justify-content-center align-items-center h-75 ">
+    <div class="container py-5 vh-100">
+        <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card bg-dark text-white" style="border-radius: 2rem; border-color: #1c1f23; border-width: 3px;">
+                <div class="card bg-dark text-white " style="border-radius: 2rem; border-color: #1c1f23; border-width: 3px;">
                     <div class="card-body p-5 text-center">
                         <div class="mb-md-5 mt-md-4 pb-5">
                         <form method="post" th:action="@{/users/login}">
@@ -34,7 +34,7 @@
                         </div>
 
                         <div>
-                            <p class="mb-0">Нямате акаунт? Регитрирайте се от <a href="/users/register" class="text-white-50 fw-bold">тук.</a></p>
+                            <p class="mb-0">Нямате акаунт? Регитрирайте се от <a th:href="@{/users/register}" class="text-white-50 fw-bold">тук.</a></p>
                         </div>
 
                     </div>

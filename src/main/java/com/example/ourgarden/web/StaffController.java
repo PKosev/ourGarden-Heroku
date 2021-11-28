@@ -2,16 +2,13 @@ package com.example.ourgarden.web;
 
 import com.example.ourgarden.model.binding.DayAddStockBindingModel;
 import com.example.ourgarden.model.binding.OrderBindingModel;
-import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.ProductEntity;
-import com.example.ourgarden.model.service.DayAddStockServiceModel;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 import com.example.ourgarden.repository.ProductRepository;
 import com.example.ourgarden.service.DayService;
 import com.example.ourgarden.service.OrderService;
-import org.dom4j.rule.Mode;
-import org.modelmapper.ModelMapper;
+import com.example.ourgarden.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,14 +27,14 @@ import java.util.stream.Collectors;
 public class StaffController {
     private final DayService dayService;
     private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
     private final OrderService orderService;
+    private final UserService userService;
 
-    public StaffController(DayService dayService, ProductRepository productRepository, ModelMapper modelMapper, OrderService orderService) {
+    public StaffController(DayService dayService, ProductRepository productRepository, OrderService orderService, UserService userService) {
         this.dayService = dayService;
         this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
         this.orderService = orderService;
+        this.userService = userService;
     }
 
     @GetMapping("/orders/makeOrder")
@@ -55,19 +52,25 @@ public class StaffController {
         return "makeOrderStaff";
     }
     @PostMapping("/orders/{id}/add")
-    public String addOrderStaff(@PathVariable Long id,@Valid OrderBindingModel orderBindingModel,
-                                RedirectAttributes redirectAttributes,BindingResult bindingResult){
+    public String addOrderStaff(@PathVariable Long id,@Valid OrderBindingModel orderBindingModel){
         DayViewModel dayEntity = dayService.findByID(id);
         if (orderBindingModel.getQuantity().compareTo(dayEntity.getMaxQuantity()) > 0){
             orderBindingModel.setQuantity(dayEntity.getMaxQuantity());
         }
-        if (orderBindingModel.getIdentity() == null){
+        if (orderBindingModel.getIdentity().isBlank()){
             return "redirect:/staff/orders/makeOrder";
         }
+
         try{
             Integer number = Integer.parseInt(orderBindingModel.getIdentity());
+            if (userService.findByPhoneNumber(orderBindingModel.getIdentity()) == null){
+                return "redirect:/staff/orders/makeOrder";
+            }
             orderService.addOrderByNumber(dayEntity,orderBindingModel);
         }catch (NumberFormatException e){
+            if (userService.findByUsername(orderBindingModel.getIdentity()) == null){
+                return "redirect:/staff/orders/makeOrder";
+            }
             orderService.addOffer(dayEntity,orderBindingModel);
         }
         return "redirect:/staff/orders/makeOrder";

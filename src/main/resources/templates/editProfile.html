@@ -70,8 +70,19 @@
                         Моля въведете правилна парола за потвърждение.
                     </small>
                 </div>
+                <div class="row align-items-center ">
+                    <small  class="text-light rounded col-3"
+                            th:text="|Роля: *{getUserRoleEnum()}|">
+                        iteration by product
+                    </small>
+                    <select th:field="${userBindingRegistrationModel.userRoleEnum}" th:errorclass="is-invalid" id="product" name="product" class="custom-select col-2">
+                        <option th:value="*{getUserRoleEnum()}" th:text="*{getUserRoleEnum()}" selected>Изберете вид</option>
+                        <option th:each="p : ${T(com.example.ourgarden.model.entity.enums.UserRoleEnum).values()}"
+                                th:value="${p.toString()}" th:text="${p.toString()}">BATTLE</option>
+                    </select>
+                </div>
                 <div class="col-4 text-center">
-                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Редактирай</button>
+                    <button class="btn btn-outline-light btn-lg px-4" type="submit">Редактирай</button>
                 </div>
             </form>
         </div>

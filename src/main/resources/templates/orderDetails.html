@@ -98,7 +98,7 @@
                         </form>
                     </th:block>
                 </div>
-                <h4 class="text-center text-white">Коментари към поръчката</h4>
+                <h4 th:if="${order.getComments().size()>0}" class="text-center text-white">Коментари към поръчката</h4>
                 <div th:each="c : ${order.getComments()}" th:object="${c}" class="row bg-gradient  rounded-top-custom">
                     <div class="col-3">
                         <small class="text-white"

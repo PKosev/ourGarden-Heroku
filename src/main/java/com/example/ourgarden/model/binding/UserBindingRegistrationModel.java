@@ -1,5 +1,7 @@
 package com.example.ourgarden.model.binding;
 
+import com.example.ourgarden.model.entity.enums.UserRoleEnum;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -13,9 +15,11 @@ public class UserBindingRegistrationModel {
     private String phoneNumber;
     private Boolean phoneNumberExist;
     private Boolean usernameExist;
+    private String userRoleEnum;
 
     public UserBindingRegistrationModel() {
     }
+
 
     @Size(min = 3, max = 15)
     public String getUsername() {
@@ -94,5 +98,13 @@ public class UserBindingRegistrationModel {
 
     public void setUsernameExist(Boolean usernameExist) {
         this.usernameExist = usernameExist;
+    }
+
+    public String getUserRoleEnum() {
+        return userRoleEnum;
+    }
+
+    public void setUserRoleEnum(String userRoleEnum) {
+        this.userRoleEnum = userRoleEnum;
     }
 }

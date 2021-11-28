@@ -12,7 +12,7 @@ public class UserViewModel {
     private String firstName;
     private String lastName;
     private String password;
-    private UserRoleEnum userRoleEnum;
+    private String userRoleEnum;
     private LocalDate dateCreated;
     private Boolean isActive;
     private String address;
@@ -62,11 +62,11 @@ public class UserViewModel {
         this.password = password;
     }
 
-    public UserRoleEnum getUserRoleEnum() {
+    public String getUserRoleEnum() {
         return userRoleEnum;
     }
 
-    public void setUserRoleEnum(UserRoleEnum userRoleEnum) {
+    public void setUserRoleEnum(String userRoleEnum) {
         this.userRoleEnum = userRoleEnum;
     }
 
