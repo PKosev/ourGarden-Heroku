@@ -51,6 +51,7 @@ public class StaffController {
 
         return "makeOrderStaff";
     }
+
     @PostMapping("/orders/{id}/add")
     public String addOrderStaff(@PathVariable Long id,@Valid OrderBindingModel orderBindingModel){
         DayViewModel dayEntity = dayService.findByID(id);
@@ -90,6 +91,11 @@ public class StaffController {
         model.addAttribute("sortedDates", sortedDates);
         model.addAttribute("dateNow", dateNow);
         return "staffViewOrders";
+    }
+    @GetMapping("/orders/viewOrders/Rest")
+    public String staffViewOrdersRest(){
+
+        return "staffViewOrdersRest";
     }
 
     @GetMapping("/addStock")

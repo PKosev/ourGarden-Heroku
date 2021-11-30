@@ -20,4 +20,6 @@ public interface RecipeService {
     void deleteRecipeById(Long id);
 
     void addPictureToRecipe(Long id, RecipeBindingModel recipeBindingModel) throws IOException;
+
+    void addViewToId(Long id);
 }

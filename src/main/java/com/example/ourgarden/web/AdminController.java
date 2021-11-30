@@ -5,26 +5,28 @@ import com.example.ourgarden.model.binding.UserBindingRegistrationModel;
 import com.example.ourgarden.model.view.ProductViewModel;
 import com.example.ourgarden.model.view.UserViewModel;
 import com.example.ourgarden.service.ProductService;
+import com.example.ourgarden.service.StatsService;
 import com.example.ourgarden.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final ProductService productService;
     private final UserService userService;
+    private final StatsService statsService;
 
-    public AdminController(ProductService productService, UserService userService) {
+    public AdminController(ProductService productService, UserService userService, StatsService statsService) {
         this.productService = productService;
         this.userService = userService;
+        this.statsService = statsService;
     }
 
     @GetMapping("/editPrices")
@@ -94,6 +96,14 @@ public class AdminController {
         user.setUserRoleEnum(userBindingRegistrationModel.getUserRoleEnum());
         userService.editRegisteredUser(user,id);
         return "redirect:/admin/"+id+"/editProfile";
+    }
+
+    @GetMapping("/stats")
+    public ModelAndView stats(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("stats", statsService.getStats());
+        modelAndView.setViewName("stats");
+        return modelAndView;
     }
 
     @ModelAttribute

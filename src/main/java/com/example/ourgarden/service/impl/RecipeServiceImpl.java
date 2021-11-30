@@ -41,6 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeEntity.setTitle(recipeBindingModel.getTitle());
         recipeEntity.setProductsNeeded(recipeBindingModel.getProductsNeeded());
         recipeEntity.setWayOfPreparation(recipeBindingModel.getWayOfPreparation());
+        recipeEntity.setViews(0L);
         recipeEntity.setAuthor(user);
         recipeEntity.setMainPicture(picture);
         recipeRepository.save(recipeEntity);
@@ -51,6 +52,15 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipe != null){
             PictureEntity picture = pictureService.createPicture(recipeBindingModel.getMainPicture(),recipe.getTitle()+"_"+recipe.getPictures().size());
             recipe.addPicture(picture);
+            recipeRepository.save(recipe);
+        }
+    }
+
+    @Override
+    public void addViewToId(Long id) {
+        RecipeEntity recipe = recipeRepository.findById(id).orElse(null);
+        if (recipe != null){
+            recipe.setViews(recipe.getViews()+1);
             recipeRepository.save(recipe);
         }
     }

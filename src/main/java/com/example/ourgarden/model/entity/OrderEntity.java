@@ -15,6 +15,7 @@ public class OrderEntity extends BaseEntity{
     private BigDecimal quantity;
     private DayEntity dayEntity;
     private UserEntity user;
+    private Boolean isReady;
     private Set<CommentEntity> comments;
 
     public OrderEntity() {
@@ -54,6 +55,14 @@ public class OrderEntity extends BaseEntity{
 
     public void setDayEntity(DayEntity dayEntity) {
         this.dayEntity = dayEntity;
+    }
+
+    public Boolean getReady() {
+        return isReady;
+    }
+
+    public void setReady(Boolean ready) {
+        isReady = ready;
     }
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)

@@ -7,6 +7,7 @@ import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 public interface OrderService {
@@ -23,4 +24,8 @@ public interface OrderService {
     void addOrderByNumber(DayViewModel dayEntity, OrderBindingModel orderBindingModel);
 
     List<OrderViewModel> findAllByDateAfter(LocalDate minusDays);
+
+    void updateStatus(Long id);
+
+    List<OrderViewModel> findAllByDateAfterAndNotReady(LocalDate minusDays);
 }

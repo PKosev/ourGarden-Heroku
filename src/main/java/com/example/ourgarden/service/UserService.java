@@ -17,7 +17,6 @@ public interface UserService {
 
     void registerUser(UserEntityServiceModel userEntityServiceModel);
 
-
     void addOrder(OrderEntity order);
 
     String getNames(String name);

@@ -18,4 +18,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     OrderEntity findByUserAndDayEntity(UserEntity user, DayEntity dayEntity);
 
     List<OrderEntity> findAllByDayEntity_DateAfter(LocalDate minusDays);
+
+    List<OrderEntity> findAllByReadyAndDayEntity_DateAfter(Boolean ready, LocalDate dayEntity_date);
 }

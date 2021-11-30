@@ -13,8 +13,9 @@ public class OrderViewModel {
     private Long id;
     private LocalDate date;
     private BigDecimal quantity;
-    private DayEntity dayEntity;
-    private UserEntity user;
+    private DayViewModel dayEntity;
+    private UserViewModel user;
+    private Boolean isReady;
     private List<CommentViewModel> comments;
 
 
@@ -46,20 +47,28 @@ public class OrderViewModel {
         this.quantity = quantity;
     }
 
-    public DayEntity getDayEntity() {
+    public DayViewModel getDayEntity() {
         return dayEntity;
     }
 
-    public void setDayEntity(DayEntity dayEntity) {
+    public void setDayEntity(DayViewModel dayEntity) {
         this.dayEntity = dayEntity;
     }
 
-    public UserEntity getUser() {
+    public UserViewModel getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(UserViewModel user) {
         this.user = user;
+    }
+
+    public Boolean getReady() {
+        return isReady;
+    }
+
+    public void setReady(Boolean ready) {
+        isReady = ready;
     }
 
     public List<CommentViewModel> getComments() {

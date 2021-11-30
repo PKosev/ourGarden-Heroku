@@ -10,13 +10,12 @@ import java.util.Set;
 public class DayViewModel {
     private Long id;
     private LocalDate date;
-    private ProductEntity product;
+    private ProductViewModel product;
     private BigDecimal quantity;
     private BigDecimal reservedQuantity;
     private BigDecimal minQuantity;
     private BigDecimal maxQuantity;
     private Boolean isActive;
-    private Set<OrderViewModel> orders;
 
     public DayViewModel() {
     }
@@ -37,11 +36,11 @@ public class DayViewModel {
         this.date = date;
     }
 
-    public ProductEntity getProduct() {
+    public ProductViewModel getProduct() {
         return product;
     }
 
-    public void setProduct(ProductEntity product) {
+    public void setProduct(ProductViewModel product) {
         this.product = product;
     }
 
@@ -85,11 +84,4 @@ public class DayViewModel {
         isActive = active;
     }
 
-    public Set<OrderViewModel> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<OrderViewModel> orders) {
-        this.orders = orders;
-    }
 }

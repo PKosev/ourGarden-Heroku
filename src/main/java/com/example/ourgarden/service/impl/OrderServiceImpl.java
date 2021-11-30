@@ -8,6 +8,7 @@ import com.example.ourgarden.model.entity.UserEntity;
 import com.example.ourgarden.model.view.CommentViewModel;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
+import com.example.ourgarden.model.view.UserViewModel;
 import com.example.ourgarden.repository.CommentRepository;
 import com.example.ourgarden.repository.DayRepository;
 import com.example.ourgarden.repository.OrderRepository;
@@ -61,6 +62,7 @@ public class OrderServiceImpl implements OrderService {
             OrderEntity order1 = new OrderEntity();
             order1.setDate(LocalDate.now());
             addComment(orderBindingModel, user, order1);
+            order1.setReady(false);
             order1.setDayEntity(dayEntity);
             order1.setQuantity(orderBindingModel.getQuantity());
             order1.setUser(user);
@@ -79,6 +81,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderViewModel> findAllByDateAfter(LocalDate minusDays) {
         return orderRepository.findAllByDayEntity_DateAfter(minusDays)
+                .stream().map(order -> modelMapper.map(order,OrderViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStatus(Long id) {
+        OrderEntity order = orderRepository.findById(id).orElse(null);
+        assert order != null;
+        order.setReady(true);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderViewModel> findAllByDateAfterAndNotReady(LocalDate minusDays) {
+        return orderRepository.findAllByReadyAndDayEntity_DateAfter(false,minusDays)
                 .stream().map(order -> modelMapper.map(order,OrderViewModel.class))
                 .collect(Collectors.toList());
     }
@@ -115,12 +132,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderViewModel findById(Long id) {
         return orderRepository.findById(id).map(order -> {
+
             OrderViewModel orderViewModel = new OrderViewModel();
             orderViewModel.setId(order.getId());
             orderViewModel.setQuantity(order.getQuantity());
-            orderViewModel.setUser(order.getUser());
+            orderViewModel.setUser(modelMapper.map(order.getUser(), UserViewModel.class));
             orderViewModel.setDate(order.getDate());
-            orderViewModel.setDayEntity(order.getDayEntity());
+            orderViewModel.setDayEntity(modelMapper.map(order.getDayEntity(), DayViewModel.class));
             order.getComments().stream().sorted(Comparator.comparing(CommentEntity::getDateTime)).forEach(comment -> {
                 CommentViewModel commentViewModel = new CommentViewModel();
                 commentViewModel.setComment(comment.getComment());

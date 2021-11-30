@@ -17,7 +17,6 @@ public class UserViewModel {
     private Boolean isActive;
     private String address;
     private String phoneNumber;
-    private Set<OrderViewModel> orders;
 
     public UserViewModel() {
     }
@@ -102,11 +101,4 @@ public class UserViewModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<OrderViewModel> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<OrderViewModel> orders) {
-        this.orders = orders;
-    }
 }

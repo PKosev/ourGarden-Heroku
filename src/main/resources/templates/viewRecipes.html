@@ -38,6 +38,9 @@
                     <p th:text="|Споделил: *{getAuthor().firstName+ ' ' + getAuthor().lastName}|" class="text-white">Lorem ipsum...</p>
                 </div>
                 <div>
+                    <p th:text="|*{'Популярност: ' + getViews()}|" class="text-white">Lorem ipsum...</p>
+                </div>
+                <div>
                     <form th:action="@{/recipes/{id}/viewRecipeDetails(id=${r.getId()})}">
                         <button class="btn btn-outline-light btn-lg my-3" type="submit">Виж рецептата</button>
                     </form>
