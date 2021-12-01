@@ -44,12 +44,10 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     }
 
     @Override
-    public boolean delete(String publicId) {
+    public void delete(String publicId) {
         try {
             this.cloudinary.uploader().destroy(publicId, Map.of());
         }catch (IOException e){
-            return false;
         }
-        return true;
     }
 }

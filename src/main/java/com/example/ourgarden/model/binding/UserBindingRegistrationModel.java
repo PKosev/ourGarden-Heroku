@@ -1,7 +1,5 @@
 package com.example.ourgarden.model.binding;
 
-import com.example.ourgarden.model.entity.enums.UserRoleEnum;
-
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 

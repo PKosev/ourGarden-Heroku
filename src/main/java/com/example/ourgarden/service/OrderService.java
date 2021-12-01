@@ -1,13 +1,10 @@
 package com.example.ourgarden.service;
 
 import com.example.ourgarden.model.binding.OrderBindingModel;
-import com.example.ourgarden.model.entity.DayEntity;
-import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 public interface OrderService {
@@ -28,4 +25,6 @@ public interface OrderService {
     void updateStatus(Long id);
 
     List<OrderViewModel> findAllByDateAfterAndNotReady(LocalDate minusDays);
+
+    void removeAllOrdersThatAreExpired();
 }

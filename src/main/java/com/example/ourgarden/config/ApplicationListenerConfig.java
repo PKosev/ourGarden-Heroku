@@ -1,7 +1,5 @@
 package com.example.ourgarden.config;
 
-
-import com.example.ourgarden.service.impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;

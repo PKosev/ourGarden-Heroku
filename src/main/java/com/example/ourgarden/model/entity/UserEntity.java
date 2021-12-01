@@ -3,7 +3,6 @@ package com.example.ourgarden.model.entity;
 import com.example.ourgarden.model.entity.enums.UserRoleEnum;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;

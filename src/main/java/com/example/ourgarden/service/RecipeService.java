@@ -1,7 +1,6 @@
 package com.example.ourgarden.service;
 
 import com.example.ourgarden.model.binding.RecipeBindingModel;
-import com.example.ourgarden.model.entity.RecipeEntity;
 import com.example.ourgarden.model.view.RecipeViewModel;
 
 import java.io.IOException;

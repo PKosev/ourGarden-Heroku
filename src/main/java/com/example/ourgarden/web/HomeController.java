@@ -1,7 +1,5 @@
 package com.example.ourgarden.web;
 
-import com.example.ourgarden.service.DayService;
-import com.example.ourgarden.service.OrderService;
 import com.example.ourgarden.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +10,9 @@ import java.security.Principal;
 
 @Controller
 public class HomeController {
-    private final DayService dayService;
-    private final OrderService orderService;
     private final UserService userService;
 
-    public HomeController(DayService dayService, OrderService orderService, UserService userService) {
-        this.dayService = dayService;
-        this.orderService = orderService;
+    public HomeController(UserService userService) {
         this.userService = userService;
     }
     @GetMapping()

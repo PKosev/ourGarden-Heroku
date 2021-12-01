@@ -9,7 +9,6 @@ import com.example.ourgarden.model.view.UserViewModel;
 import com.example.ourgarden.repository.UserRepository;
 import com.example.ourgarden.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

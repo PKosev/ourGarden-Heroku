@@ -10,7 +10,6 @@ import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 import com.example.ourgarden.model.view.UserViewModel;
 import com.example.ourgarden.repository.CommentRepository;
-import com.example.ourgarden.repository.DayRepository;
 import com.example.ourgarden.repository.OrderRepository;
 import com.example.ourgarden.service.DayService;
 import com.example.ourgarden.service.OrderService;
@@ -34,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     private final DayService dayService;
     private final ModelMapper modelMapper;
 
-    public OrderServiceImpl(UserService userService, OrderRepository orderRepository, CommentRepository commentRepository, DayRepository dayRepository, DayService dayService, ModelMapper modelMapper) {
+    public OrderServiceImpl(UserService userService, OrderRepository orderRepository, CommentRepository commentRepository, DayService dayService, ModelMapper modelMapper) {
         this.userService = userService;
         this.orderRepository = orderRepository;
         this.commentRepository = commentRepository;
@@ -98,6 +97,14 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByReadyAndDayEntity_DateAfter(false,minusDays)
                 .stream().map(order -> modelMapper.map(order,OrderViewModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void removeAllOrdersThatAreExpired() {
+        List<OrderEntity> orders =  orderRepository.findAllByDayEntity_DateBefore(LocalDate.now().minusDays(1));
+        for (OrderEntity order: orders){
+            removeOrder(order.getId());
+        }
     }
 
     private void addComment(OrderBindingModel orderBindingModel, UserEntity user, OrderEntity order) {

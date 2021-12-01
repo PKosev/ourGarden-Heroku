@@ -1,10 +1,7 @@
 package com.example.ourgarden.model.view;
 
-import com.example.ourgarden.model.entity.OrderEntity;
-import com.example.ourgarden.model.entity.enums.UserRoleEnum;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public class UserViewModel {
     private Long id;

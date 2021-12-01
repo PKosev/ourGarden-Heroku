@@ -1,9 +1,5 @@
 package com.example.ourgarden.model.view;
 
-import com.example.ourgarden.model.entity.CommentEntity;
-import com.example.ourgarden.model.entity.DayEntity;
-import com.example.ourgarden.model.entity.UserEntity;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;

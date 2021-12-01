@@ -1,11 +1,7 @@
 package com.example.ourgarden.model.view;
 
-import com.example.ourgarden.model.entity.OrderEntity;
-import com.example.ourgarden.model.entity.ProductEntity;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
 
 public class DayViewModel {
     private Long id;

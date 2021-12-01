@@ -1,8 +1,5 @@
 package com.example.ourgarden.model.view;
 
-import com.example.ourgarden.model.entity.PictureEntity;
-import com.example.ourgarden.model.entity.UserEntity;
-
 import java.util.Set;
 
 public class RecipeViewModel {

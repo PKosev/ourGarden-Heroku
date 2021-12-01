@@ -1,6 +1,5 @@
 package com.example.ourgarden.model.binding;
 
-import com.example.ourgarden.model.entity.ProductEntity;
 import com.example.ourgarden.model.entity.enums.ProductNameEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 

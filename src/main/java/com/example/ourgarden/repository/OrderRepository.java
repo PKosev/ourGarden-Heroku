@@ -3,7 +3,6 @@ package com.example.ourgarden.repository;
 import com.example.ourgarden.model.entity.DayEntity;
 import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.entity.UserEntity;
-import com.example.ourgarden.model.view.OrderViewModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +19,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     List<OrderEntity> findAllByDayEntity_DateAfter(LocalDate minusDays);
 
     List<OrderEntity> findAllByReadyAndDayEntity_DateAfter(Boolean ready, LocalDate dayEntity_date);
+
+
+    List<OrderEntity> findAllByDayEntity_DateBefore(LocalDate minusDays);
 }

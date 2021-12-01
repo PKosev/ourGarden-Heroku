@@ -2,8 +2,6 @@ package com.example.ourgarden.web;
 
 import com.example.ourgarden.model.binding.CommentBindingModel;
 import com.example.ourgarden.model.binding.OrderBindingModel;
-import com.example.ourgarden.model.entity.DayEntity;
-import com.example.ourgarden.model.entity.OrderEntity;
 import com.example.ourgarden.model.view.DayViewModel;
 import com.example.ourgarden.model.view.OrderViewModel;
 import com.example.ourgarden.model.view.ProductViewModel;

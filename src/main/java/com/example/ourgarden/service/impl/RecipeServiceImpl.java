@@ -4,7 +4,6 @@ import com.example.ourgarden.model.binding.RecipeBindingModel;
 import com.example.ourgarden.model.entity.PictureEntity;
 import com.example.ourgarden.model.entity.RecipeEntity;
 import com.example.ourgarden.model.entity.UserEntity;
-import com.example.ourgarden.model.view.OrderViewModel;
 import com.example.ourgarden.model.view.RecipeViewModel;
 import com.example.ourgarden.repository.RecipeRepository;
 import com.example.ourgarden.service.PictureService;
