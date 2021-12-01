@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="fragment/fragment::nav">Error</nav>
+<!-- Header - set the background image for the header in the line below-->
+<header sec:authorize="!hasRole('ADMIN')" class="py-5 bg-image-full" style="height: 25vh; background-image: url(/image/pexels-photo-1105019.jpeg)"></header>
+<!-- Content section-->
+<section class="bg-dark"  >
+    <div class="container py-5 vh-100 text-white">
+        <div  class="row justify-content-center">
+            <div>
+                <h2 class="text-center">Статистика за сайта</h2>
+                <h4 th:text="${'Всички заявки към сайта:'+ stats.getTotalRequests()}" class="text-center" >Error</h4>
+                <h4 th:text="${'Заявки от логнати потрбители:'+stats.getAuthRequests()}" class="text-center" >Error</h4>
+                <h4 th:text="${'Заявки от анонимни потрбители: '+stats.getAnonymousRequests()}"  class="text-center">Error</h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image element - set the background image for the header in the line below-->
+<div sec:authorize="!hasRole('ADMIN')" class="py-5 bg-image-full" style="background-image: url(/image/pexels-photo-334978.jpeg)">
+    <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
+    <div style="height: 20rem"></div>
+</div>
+<footer th:replace="fragment/fragment::footer">Error</footer>
+</body>
+</html>
