@@ -37,7 +37,6 @@ public class DayServiceImpl implements DayService {
         dayEntity.setQuantity(dayAddStockServiceModel.getQuantity());
         dayEntity.setReservedQuantity(BigDecimal.valueOf(0));
         calculateVariables(dayEntity);
-        dayRepository.save(dayEntity);
     }
 
     @Override
@@ -60,7 +59,6 @@ public class DayServiceImpl implements DayService {
         dayEntity.setMaxQuantity(dayEntity.getQuantity().subtract(dayEntity.getReservedQuantity()));
         dayEntity.setMinQuantity(dayEntity.getQuantity().multiply(BigDecimal.valueOf(0.05)));
         dayEntity.setActive(dayEntity.getMaxQuantity().compareTo(dayEntity.getMinQuantity()) > 0);
-
         dayRepository.save(dayEntity);
     }
 

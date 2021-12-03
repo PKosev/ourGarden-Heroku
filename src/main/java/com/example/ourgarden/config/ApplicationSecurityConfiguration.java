@@ -27,7 +27,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 antMatchers("/","/users/login","/users/register","/image/**").permitAll().
                 antMatchers("/staff/**").hasAnyRole(UserRoleEnum.ADMIN.name(),UserRoleEnum.STAFF.name()).
-                antMatchers("/admin/**").hasAnyRole(UserRoleEnum.ADMIN.name()).
+                antMatchers("/admin/**","rest/**").hasAnyRole(UserRoleEnum.ADMIN.name()).
                 antMatchers("/**").authenticated().
             and().
                 formLogin().

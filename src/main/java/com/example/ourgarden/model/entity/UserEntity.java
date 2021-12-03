@@ -85,7 +85,7 @@ public class UserEntity extends BaseEntity{
         isActive = active;
     }
 
-    @Column(nullable = false,columnDefinition = "TEXT")
+    @Lob
     public String getAddress() {
         return address;
     }
@@ -102,7 +102,7 @@ public class UserEntity extends BaseEntity{
         this.phoneNumber = phoneNumber;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     public Set<OrderEntity> getOrders() {
         return orders;
     }
