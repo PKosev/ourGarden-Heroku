@@ -48,8 +48,8 @@ function reloadOrders() {
 
 async function fetchDatesAndOrders(){
     const [dateResponse, orderResponse] = await Promise.all([
-        fetch("http://localhost:8080/rest/datesRest"),
-        fetch("http://localhost:8080/rest/ordersRest")
+        fetch("http://our-garden.herokuapp.com/rest/datesRest"),
+        fetch("http://our-garden.herokuapp.com/rest/ordersRest")
     ]);
 
     const dates = await dateResponse.json();
@@ -61,7 +61,7 @@ async function fetchDatesAndOrders(){
 $('body').on('click', 'button.link-button-update', function () {
     let orderId = $(this).data('order-id');
     console.log("Order id to be updated is " + orderId);
-    fetch('http://localhost:8080/rest/orders/' + orderId + '/ready', {
+    fetch('http://our-garden.herokuapp.com/rest/orders/' + orderId + '/ready', {
         method: 'GET'
     }).then(_ =>reloadOrders())
 });
