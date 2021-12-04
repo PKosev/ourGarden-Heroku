@@ -61,7 +61,7 @@ async function fetchDatesAndOrders(){
 $('body').on('click', 'button.link-button-update', function () {
     let orderId = $(this).data('order-id');
     console.log("Order id to be updated is " + orderId);
-    fetch('http://our-garden.herokuapp.com/rest/orders/' + orderId + '/ready', {
+    fetch('https://our-garden.herokuapp.com//rest/orders/' + orderId + '/ready', {
         method: 'GET'
     }).then(_ =>reloadOrders())
 });
