@@ -1,0 +1,1 @@
+web: java -jar target/OurGarden-0.jar

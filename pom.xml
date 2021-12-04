@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>OurGarden</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0</version>
     <name>OurGarden</name>
     <description>OurGarden</description>
     <properties>
@@ -54,8 +54,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 
