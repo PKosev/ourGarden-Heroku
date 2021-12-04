@@ -10,8 +10,8 @@ $(function(){
 function reloadOrders() {
     $("#authors-container").empty()
     fetchDatesAndOrders().then(([dates,orders])=>{
-        const keyDates = Object.keys(dates)
-        const keyOrders = Object.keys(orders)
+        const keyDates = JSON.parse(dates)
+        const keyOrders = JSON.parse(orders)
         keyDates.forEach(currentDate =>{
             let tableRow = '<div class="row align-content-start col-12 text-white bg-gradient rounded-top">' +
                 '<div class="col-2">' +
