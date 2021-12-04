@@ -1,6 +1,11 @@
 $('#loadOrders').click(() => {
     reloadOrders()
 });
+$(function(){
+    if($('body').is('.RestPage')){
+        reloadOrders()
+    }
+});
 
 function reloadOrders() {
     $("#authors-container").empty()

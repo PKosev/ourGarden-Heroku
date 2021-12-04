@@ -69,8 +69,8 @@ class RestOrderControllerTest {
 
     @BeforeEach
     public void SetUp(){
-        initDayEntry();
-        createSomeOrders();
+            initDayEntry();
+            createSomeOrders();
     }
 
     @AfterEach

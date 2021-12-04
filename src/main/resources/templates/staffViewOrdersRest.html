@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragment/fragment::head" ><title>Нашата градина</title></head>
-<body>
+<body class="RestPage">
 <!-- Responsive navbar-->
 <nav th:replace="fragment/fragment::nav">Error</nav>
 <!-- Header - set the background image for the header in the line below-->
@@ -13,14 +13,15 @@
             <div class="row ">
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/makeOrder}">Добавяне на поръчка като ...</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/addStock}" >Добавяне на наличност</a>
-                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
                 <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/stockView}">Преглед на наличности</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/staff/orders/viewOrders}">Преглед на поръчки</a>
+                <a class="col-auto text-white btn bg-gradient me-2 mb-2" th:href="@{/staff/orders/viewOrders/Rest}">Приключване на поръчки</a>
                 <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/editPrices}">Цени</a>
                 <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/viewUsers}">Потребители</a>
                 <a sec:authorize="hasRole('ADMIN')" class="col-auto text-white btn bg-gradient me-2 mb-2"  th:href="@{/admin/stats}">Статистика</a>
             </div>
-            <div>
-            <button id="loadOrders" >LOAD ALL ORDERS</button>
+            <div class="row col-12 align-items-center justify-content-center align-content-center">
+                <div class="col-auto"><button class="col-auto" id="loadOrders">Презареждане</button></div>
             </div>
             <div id="authors-container"></div>
         </div>
