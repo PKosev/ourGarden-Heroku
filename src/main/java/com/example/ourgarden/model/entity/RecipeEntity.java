@@ -29,7 +29,7 @@ public class RecipeEntity extends BaseEntity {
         this.title = title;
     }
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     public String getProductsNeeded() {
         return productsNeeded;
     }
@@ -38,7 +38,7 @@ public class RecipeEntity extends BaseEntity {
         this.productsNeeded = productsNeeded;
     }
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     public String getWayOfPreparation() {
         return wayOfPreparation;
     }
