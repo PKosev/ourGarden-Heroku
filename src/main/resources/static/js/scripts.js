@@ -48,8 +48,8 @@ function reloadOrders() {
 
 async function fetchDatesAndOrders(){
     const [dateResponse, orderResponse] = await Promise.all([
-        fetch("http://our-garden.herokuapp.com/rest/datesRest"),
-        fetch("http://our-garden.herokuapp.com/rest/ordersRest")
+        fetch("https://our-garden.herokuapp.com//rest/datesRest"),
+        fetch("https://our-garden.herokuapp.com//rest/ordersRest")
     ]);
 
     const dates = await dateResponse.json();
