@@ -10,9 +10,7 @@ $(function(){
 function reloadOrders() {
     $("#authors-container").empty()
     fetchDatesAndOrders().then(([dates,orders])=>{
-        const keyDates = JSON.parse(dates)
-        const keyOrders = JSON.parse(orders)
-        keyDates.forEach(currentDate =>{
+        dates.forEach(currentDate =>{
             let tableRow = '<div class="row align-content-start col-12 text-white bg-gradient rounded-top">' +
                 '<div class="col-2">' +
                 '<small>' + currentDate + '</small>' +
@@ -24,7 +22,7 @@ function reloadOrders() {
                 '<small>Приблизителна цена</small>' +
                 '</div>' +
                 '</div>';
-            keyOrders.forEach(currentOrder =>{
+            orders.forEach(currentOrder =>{
                 if (currentDate === currentOrder.dayEntity.date){
                     tableRow += '<div class="row align-content-start col-12 text-white">' +
                         '<div class="col-2">' +
