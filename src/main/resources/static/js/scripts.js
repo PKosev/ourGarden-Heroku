@@ -10,8 +10,10 @@ $(function(){
 function reloadOrders() {
     $("#authors-container").empty()
     fetchDatesAndOrders().then(([dates,orders])=>{
-        dates.forEach(currentDate =>{
-        let tableRow = '<div class="row align-content-start col-12 text-white bg-gradient rounded-top">' +
+        const keyDates = Object.keyDates(dates)
+        const keyOrders = Object.keyOrders(orders)
+        keyDates.forEach(currentDate =>{
+            let tableRow = '<div class="row align-content-start col-12 text-white bg-gradient rounded-top">' +
                 '<div class="col-2">' +
                 '<small>' + currentDate + '</small>' +
                 '</div>' +
@@ -22,24 +24,24 @@ function reloadOrders() {
                 '<small>Приблизителна цена</small>' +
                 '</div>' +
                 '</div>';
-                orders.forEach(currentOrder =>{
-                    if (currentDate === currentOrder.dayEntity.date){
-                        tableRow += '<div class="row align-content-start col-12 text-white">' +
-                            '<div class="col-2">' +
-                            '<small>' + currentOrder.dayEntity.product.nameInBulgarian + '</small>' +
-                            '</div>' +
-                            '<div class="col-2">' +
-                            '<small>' + (currentOrder.quantity).toFixed(2) + ' кг</small>' +
-                            '</div>' +
-                            '<div class="col-3">' +
-                            '<small>'+ (currentOrder.quantity * currentOrder.dayEntity.product.pricePerKilogram).toFixed(2) +' лева</small>' +
-                            '</div>' +
-                            '<div class="col-2">' +
-                            '<button  data-order-id="' +currentOrder.id+ '"  class="link-button-update">Приключи</button>' +
-                            '</div>'+
-                            '</div>';
-                    }
-                })
+            keyOrders.forEach(currentOrder =>{
+                if (currentDate === currentOrder.dayEntity.date){
+                    tableRow += '<div class="row align-content-start col-12 text-white">' +
+                        '<div class="col-2">' +
+                        '<small>' + currentOrder.dayEntity.product.nameInBulgarian + '</small>' +
+                        '</div>' +
+                        '<div class="col-2">' +
+                        '<small>' + (currentOrder.quantity).toFixed(2) + ' кг</small>' +
+                        '</div>' +
+                        '<div class="col-3">' +
+                        '<small>'+ (currentOrder.quantity * currentOrder.dayEntity.product.pricePerKilogram).toFixed(2) +' лева</small>' +
+                        '</div>' +
+                        '<div class="col-2">' +
+                        '<button  data-order-id="' +currentOrder.id+ '"  class="link-button-update">Приключи</button>' +
+                        '</div>'+
+                        '</div>';
+                }
+            })
         $("#authors-container").append(tableRow)
         } )
     })
