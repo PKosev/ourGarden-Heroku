@@ -85,7 +85,6 @@ public class UserEntity extends BaseEntity{
         isActive = active;
     }
 
-    @Lob
     public String getAddress() {
         return address;
     }
