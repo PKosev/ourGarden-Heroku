@@ -34,42 +34,42 @@ public class ProductServiceImpl implements ProductService {
                     ProductEntity product = new ProductEntity();
                     product.setProductNameEnum(categoryNameEnum);
                     switch (categoryNameEnum){
-                        case HONEY -> {
+                        case HONEY:
                             product.setNameInBulgarian("Мед");
                             product.setPricePerKilogram(BigDecimal.valueOf(10));
-                        }
-                        case POTATO-> {
+                            break;
+                        case POTATO:
                             product.setNameInBulgarian("Картофи");
                             product.setPricePerKilogram(BigDecimal.valueOf(0.8));
-                        }
-                        case TOMATO -> {
+                         break;
+                        case TOMATO :
                             product.setNameInBulgarian("Домати");
                             product.setPricePerKilogram(BigDecimal.valueOf(2));
-                        }
-                        case CABBAGE -> {
+                            break;
+                        case CABBAGE :
                             product.setNameInBulgarian("Зеле");
                             product.setPricePerKilogram(BigDecimal.valueOf(1));
-                        }
-                        case SAFFRON -> {
+                            break;
+                        case SAFFRON :
                             product.setNameInBulgarian("Шафран");
                             product.setPricePerKilogram(BigDecimal.valueOf(3000));
-                        }
-                        case CUCUMBER -> {
+                            break;
+                        case CUCUMBER :
                             product.setNameInBulgarian("Краставици");
                             product.setPricePerKilogram(BigDecimal.valueOf(2));
-                        }
-                        case ZUCCHINI -> {
+                            break;
+                        case ZUCCHINI :
                             product.setNameInBulgarian("Тикивички");
                             product.setPricePerKilogram(BigDecimal.valueOf(2));
-                        }
-                        case SWEET_CORN-> {
+                            break;
+                        case SWEET_CORN :
                             product.setNameInBulgarian("Сладка царевица");
                             product.setPricePerKilogram(BigDecimal.valueOf(1.5));
-                        }
-                        case EARTH_APPLE-> {
+                            break;
+                        case EARTH_APPLE :
                             product.setNameInBulgarian("Земна ябълка");
                             product.setPricePerKilogram(BigDecimal.valueOf(8));
-                        }
+                            break;
                     }
                     productRepository.save(product);
                 });

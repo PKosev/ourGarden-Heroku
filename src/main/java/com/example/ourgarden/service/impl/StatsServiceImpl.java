@@ -13,17 +13,17 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public void onRequest() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication.getPrincipal() instanceof UserDetails){
-            authRequests++;
-        }else {
-            anonymousRequests++;
-        }
+            if(authentication.getPrincipal() instanceof UserDetails){
+                authRequests++;
+            }else {
+                anonymousRequests++;
+            }
     }
 
     @Override
     public StatsViewModel getStats() {
-        return new StatsViewModel(authRequests, anonymousRequests);
+        return new StatsViewModel(authRequests,anonymousRequests);
     }
 }

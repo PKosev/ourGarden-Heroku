@@ -1,9 +1,16 @@
 package com.example.ourgarden.model.view;
 
-public record StatsViewModel(int authRequests, int anonymousRequests) {
+public class StatsViewModel {
+    int authRequests;
+    int anonymousRequests;
+
+    public StatsViewModel(int authRequests, int anonymousRequests) {
+        this.authRequests = authRequests;
+        this.anonymousRequests = anonymousRequests;
+    }
 
     public int getTotalRequests() {
-        return authRequests + anonymousRequests;
+        return this.authRequests + anonymousRequests;
     }
 
     public int getAuthRequests() {

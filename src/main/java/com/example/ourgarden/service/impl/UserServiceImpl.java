@@ -145,9 +145,12 @@ public class UserServiceImpl implements UserService {
                 userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
             }
             switch (user.getUserRoleEnum()) {
-                case "ADMIN" -> userEntity.setUserRoleEnum(UserRoleEnum.ADMIN);
-                case "STAFF" -> userEntity.setUserRoleEnum(UserRoleEnum.STAFF);
-                case "USER" -> userEntity.setUserRoleEnum(UserRoleEnum.USER);
+                case "ADMIN" :
+                     userEntity.setUserRoleEnum(UserRoleEnum.ADMIN);
+                     break;
+                case "STAFF" : userEntity.setUserRoleEnum(UserRoleEnum.STAFF);
+                    break;
+                case "USER" : userEntity.setUserRoleEnum(UserRoleEnum.USER);
             }
             userRepository.save(userEntity);
         }
